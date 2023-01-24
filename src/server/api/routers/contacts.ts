@@ -3,14 +3,9 @@ import { z } from "zod";
 import { createTRPCRouter, publicProcedure } from "../trpc";
 
 export const contactsRouter = createTRPCRouter({
-  hello: publicProcedure
-    .input(z.object({ text: z.string() }))
-    .query(({ input }) => {
-      return {
-        greeting: `Hello ${input.text}`,
-      };
+  getAllContacts: publicProcedure
+    .input(z.object({ userId: z.string().uuid() }))
+    .query(({ ctx, input }) => {
+      return ctx.prisma.contact.findMany({ where: { userId: input.userId } });
     }),
-  getAll: publicProcedure.query(({ ctx }) => {
-    return ctx.prisma.example.findMany();
-  }),
 });

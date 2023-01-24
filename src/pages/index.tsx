@@ -13,8 +13,6 @@ import {
 import { api } from "../utils/api";
 
 const Home: NextPage = () => {
-  const hello = api.contacts.hello.useQuery({ text: "from tRPC" });
-
   return (
     <>
       <Head>

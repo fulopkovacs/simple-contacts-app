@@ -5,9 +5,11 @@
   "scripts": {
     "build": "next build",
     "dev": "next dev",
-    "postinstall": "DATABASE_URL=file:./db.sqlite prisma generate",
-    "db-seed": "NODE_ENV=development DATABASE_URL=file:./db.sqlite prisma db seed",
-    "studio": "DATABASE_URL=file:./db.sqlite prisma studio",
+    "postinstall": "prisma generate",
+    "db-seed": "NODE_ENV=development prisma db seed",
+    "db-generate": "prisma generate",
+    "db-migrate-dev": "prisma migrate dev",
+    "studio": "prisma studio",
     "lint": "next lint",
     "start": "next start"
   },
