@@ -29,6 +29,9 @@ module.exports = {
         secondary: "56%",
         disabled: "32%",
       },
+      gridTemplateColumns: {
+        navbar: "1fr auto 1fr",
+      },
     },
   },
   plugins: [],
