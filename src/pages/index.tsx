@@ -28,7 +28,10 @@ const Home: NextPage = () => {
           Headline 3. Used for highlighting text in simple components
         </Headline3>
         <Body>Body. Used for interactive elements</Body>
-        <Message>Message. Used for displaying exetensive info</Message>
+        <Message className="opacity-secondary">
+          Message. Used for displaying exetensive info
+        </Message>
+        <Message className="opacity-disabled">This message is disabled</Message>
       </div>
     </>
   );

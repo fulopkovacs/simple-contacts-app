@@ -1,3 +1,10 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+@layer base {
+  /* Fixes the light bg behind the address bar in iOS Safari */
+  root,
+  html {
+    @apply bg-g-100;
+  }
+}
