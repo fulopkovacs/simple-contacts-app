@@ -45,7 +45,7 @@ export function AddContactButton({
 }: Omit<ButtonProps, "variant" | "iconSrc">) {
   return (
     <button
-      className={`relative rounded-full bg-gradient-to-b from-add-contact-border-1 to-add-contact-border-2 ${
+      className={`type-body relative rounded-full bg-gradient-to-b from-add-contact-border-1 to-add-contact-border-2 ${
         className || ""
       }`}
       {...props}
