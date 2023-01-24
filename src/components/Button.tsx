@@ -1,4 +1,4 @@
-import { ButtonHTMLAttributes, DetailedHTMLProps } from "react";
+import type { ButtonHTMLAttributes, DetailedHTMLProps } from "react";
 
 type ButtonProps = {
   children?: React.ReactNode;
@@ -10,7 +10,7 @@ type ButtonProps = {
 export function Button({ children, className, ...props }: ButtonProps) {
   return (
     <button
-      className={`type-body rounded-[8px] bg-g-60 px-[8px] py-[16px] hover:bg-g-50 active:bg-g-40  ${
+      className={`type-body rounded-[8px] bg-g-60 px-[8px] py-[16px] transition-colors hover:bg-g-50 active:bg-g-40  ${
         className || ""
       }`}
       {...props}
