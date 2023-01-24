@@ -1,6 +1,13 @@
 import { type NextPage } from "next";
 import Head from "next/head";
 import Link from "next/link";
+import {
+  Body,
+  Headline1,
+  Headline2,
+  Headline3,
+  Message,
+} from "../components/Typography";
 
 import { api } from "../utils/api";
 
@@ -14,9 +21,15 @@ const Home: NextPage = () => {
         <meta name="description" content="Simple contacts app demo" />
         <link rel="icon" href="/favicon.svg" />
       </Head>
-      <main className="">
-        <div className="">Contacts app</div>
-      </main>
+      <div className="">
+        <Headline1>Headline 1. Used for titles</Headline1>
+        <Headline2>Headline 2. Used for subtitles</Headline2>
+        <Headline3>
+          Headline 3. Used for highlighting text in simple components
+        </Headline3>
+        <Body>Body. Used for interactive elements</Body>
+        <Message>Message. Used for displaying exetensive info</Message>
+      </div>
     </>
   );
 };
