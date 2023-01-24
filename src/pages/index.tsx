@@ -1,7 +1,7 @@
 import { type NextPage } from "next";
 import Head from "next/head";
 import Link from "next/link";
-import { Button } from "../components/Button";
+import { AddContactButton, Button } from "../components/Button";
 import { NavBar } from "../components/NavBar";
 import {
   Body,
@@ -24,7 +24,18 @@ const Home: NextPage = () => {
       <NavBar />
       <div className="flex w-full justify-center">
         <div className="min-h-screen w-[720px] border-x border-g-60">
-          content
+          <div className="flex w-min flex-col gap-2 p-2">
+            <Button>Add new</Button>
+            <Button variant="primary">Add new</Button>
+            <Button variant="primary" iconSrc="/icons/Add.svg">
+              Add new
+            </Button>
+            <Button variant="primary" iconSrc="/icons/Add.svg"></Button>
+            <AddContactButton
+            >
+              Add new
+            </AddContactButton>
+          </div>
         </div>
       </div>
     </>

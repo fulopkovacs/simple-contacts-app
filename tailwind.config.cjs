@@ -23,6 +23,13 @@ module.exports = {
           20: "#3c3c3c",
           10: "#414141",
         },
+        // Colors for the "Add contact" button's gradients
+        "add-contact": {
+          "base-1": "rgba(40, 40, 40, 0.7)",
+          "base-2": "rgba(40, 40, 40, 1)",
+          "border-1": "rgba(60, 60, 60, 1)",
+          "border-2": "rgba(60, 60, 60, 0)",
+        },
       },
       opacity: {
         primary: "100%",
