@@ -1,10 +1,21 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
 @layer base {
   /* Fixes the light bg behind the address bar in iOS Safari */
   root,
   html {
     @apply bg-g-100;
+  }
+}
+
+@layer components {
+  .type-body {
+    font-family: theme("fontFamily.lexend");
+    font-weight: normal;
+    letter-spacing: 0.14px;
+    line-height: 20px;
+    font-size: 14px;
   }
 }

@@ -1,6 +1,7 @@
 import { type NextPage } from "next";
 import Head from "next/head";
 import Link from "next/link";
+import { Button } from "../components/Button";
 import {
   Body,
   Headline1,
@@ -32,6 +33,7 @@ const Home: NextPage = () => {
           Message. Used for displaying exetensive info
         </Message>
         <Message className="opacity-disabled">This message is disabled</Message>
+        <Button onClick={() => alert("hi")}>This is a button</Button>
       </div>
     </>
   );

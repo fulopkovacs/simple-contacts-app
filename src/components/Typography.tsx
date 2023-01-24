@@ -60,13 +60,9 @@ export function Body({
   children,
   className = "",
 }: TypographyComponentProps<HTMLParagraphElement>) {
-  return (
-    <p
-      className={`font-lexend text-[14px] font-normal leading-[20px] tracking-[0.14px] ${className}`}
-    >
-      {children}
-    </p>
-  );
+  // Made a custom Tailwind class for this style,
+  // because it's used in the `Button` component as well
+  return <p className={`type-body ${className}`}>{children}</p>;
 }
 
 export function Message({
