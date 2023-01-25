@@ -1,6 +1,6 @@
-import { AddContactButton, Button } from "./Button";
+import { AddContactDialogButton } from "./AddContactDialog";
+import { Button } from "./Button";
 import { Headline1 } from "./Typography";
-
 /**
 The navigation bar.
 */
@@ -19,7 +19,7 @@ export function NavBar() {
           <Button iconSrc="/icons/Settings.svg" />
           <Button iconSrc="/icons/Profile-pic.png"></Button>
         </div>
-        <AddContactButton>Add new</AddContactButton>
+        <AddContactDialogButton>Add new</AddContactDialogButton>
       </div>
       <div className="flex items-center justify-start border-t border-g-60 pl-6">
         <Button iconSrc="/icons/Light-mode.svg"></Button>
