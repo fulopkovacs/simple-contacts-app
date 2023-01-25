@@ -1,12 +1,66 @@
 import * as Dialog from "@radix-ui/react-dialog";
 import { AddContactButton, Button } from "./Button";
+import type { AddContactButtonProps } from "./Button";
+import type { ButtonProps } from "./Button";
 import { Headline2, Message } from "./Typography";
+import type { TypographyComponentProps } from "./Typography";
 import Image from "next/image";
 import type {
   DetailedHTMLProps,
+  ForwardedRef,
   InputHTMLAttributes,
   LabelHTMLAttributes,
 } from "react";
+import { forwardRef } from "react";
+
+const Headline2WithRef = forwardRef(
+  (
+    {
+      props,
+      children,
+    }: {
+      props?: TypographyComponentProps<HTMLHeadingElement>;
+      children: React.ReactNode;
+    },
+    ref: ForwardedRef<HTMLHeadingElement>
+  ) => {
+    return (
+      <Headline2 forwardedRef={ref} {...props}>
+        {children}
+      </Headline2>
+    );
+  }
+);
+Headline2WithRef.displayName = "Headline2WithRef";
+
+const ButtonWithRef = forwardRef(
+  (
+    { children, ...props }: ButtonProps,
+    ref: ForwardedRef<HTMLButtonElement>
+  ) => {
+    return (
+      <Button forwardedRef={ref} {...props}>
+        {children}
+      </Button>
+    );
+  }
+);
+ButtonWithRef.displayName = "ButtonWithRef";
+
+const AddContactButtonWithRef = forwardRef(
+  (
+    { children, ...props }: AddContactButtonProps,
+
+    ref: ForwardedRef<HTMLButtonElement>
+  ) => {
+    return (
+      <AddContactButton forwardedRef={ref} {...props}>
+        {children}
+      </AddContactButton>
+    );
+  }
+);
+AddContactButtonWithRef.displayName = "AddContactButtonWithRef";
 
 function TextInputLabel({
   children,
@@ -41,12 +95,12 @@ export function AddContactDialogButton({ children }: { children: string }) {
   return (
     <Dialog.Root modal defaultOpen>
       <Dialog.Trigger asChild>
-        <AddContactButton>{children}</AddContactButton>
+        <AddContactButtonWithRef>{children}</AddContactButtonWithRef>
       </Dialog.Trigger>
       <Dialog.Overlay className="fixed top-0 left-0 z-20 h-screen w-screen bg-black opacity-40"></Dialog.Overlay>
       <Dialog.Content className="fixed top-1/2 left-1/2 z-30 grid w-96 -translate-x-1/2 -translate-y-1/2 gap-6 bg-g-100 p-6 text-white">
         <Dialog.Title asChild>
-          <Headline2>Add contact</Headline2>
+          <Headline2WithRef>Add contact</Headline2WithRef>
         </Dialog.Title>
         <div className="flex items-center gap-4">
           <div className="relative h-20 w-20 overflow-hidden rounded-full">
@@ -87,10 +141,10 @@ export function AddContactDialogButton({ children }: { children: string }) {
         </fieldset>
         <div className="flex justify-end gap-2 pt-6">
           <Dialog.Close asChild>
-            <Button>Cancel</Button>
+            <ButtonWithRef>Cancel</ButtonWithRef>
           </Dialog.Close>
           <Dialog.Close asChild>
-            <Button primary>Done</Button>
+            <ButtonWithRef primary>Done</ButtonWithRef>
           </Dialog.Close>
         </div>
       </Dialog.Content>

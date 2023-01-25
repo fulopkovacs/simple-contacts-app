@@ -1,24 +1,33 @@
 import Image from "next/image";
-import type { ButtonHTMLAttributes, DetailedHTMLProps } from "react";
+import type {
+  ButtonHTMLAttributes,
+  DetailedHTMLProps,
+  ForwardedRef,
+} from "react";
 
-type ButtonProps = {
+export type ButtonProps = {
   children?: React.ReactNode;
   primary?: boolean;
   iconSrc?: string;
+  forwardedRef?: ForwardedRef<HTMLButtonElement>;
 } & DetailedHTMLProps<
   ButtonHTMLAttributes<HTMLButtonElement>,
   HTMLButtonElement
 >;
 
-export function Button({
+export type AddContactButtonProps = Omit<ButtonProps, "primary" | "iconSrc">;
+
+export const Button = ({
   children,
   className,
   iconSrc,
   primary = false,
+  forwardedRef,
   ...props
-}: ButtonProps) {
+}: ButtonProps) => {
   return (
     <button
+      {...{ ref: forwardedRef }}
       className={`type-body flex h-[40px] w-max items-center justify-center gap-2 rounded-[8px] px-[16px] py-[8px] transition-colors
       ${!primary ? "bg-g-100 hover:bg-g-90 active:bg-g-80" : ""}
       ${primary ? " bg-g-60 hover:bg-g-50 active:bg-g-40" : ""}
@@ -36,15 +45,17 @@ export function Button({
       {children}
     </button>
   );
-}
+};
 
-export function AddContactButton({
+export const AddContactButton = ({
   children,
   className,
+  forwardedRef,
   ...props
-}: Omit<ButtonProps, "primary" | "iconSrc">) {
+}: AddContactButtonProps) => {
   return (
     <button
+      {...{ ref: forwardedRef }}
       className={`type-body relative rounded-full bg-gradient-to-b from-add-contact-border-1 to-add-contact-border-2 ${
         className || ""
       }`}
@@ -59,4 +70,4 @@ export function AddContactButton({
       </div>
     </button>
   );
-}
+};
