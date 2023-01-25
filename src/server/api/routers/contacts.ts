@@ -8,4 +8,9 @@ export const contactsRouter = createTRPCRouter({
     .query(({ ctx, input }) => {
       return ctx.prisma.contact.findMany({ where: { userId: input.userId } });
     }),
+  deleteContact: publicProcedure
+    .input(z.object({ contactId: z.string().uuid() }))
+    .mutation(({ ctx, input }) => {
+      return ctx.prisma.contact.delete({ where: { id: input.contactId } });
+    }),
 });

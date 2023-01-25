@@ -5,6 +5,13 @@ import Image from "next/image";
 import { Button } from "./Button";
 
 export function ContactListItem({ contact }: { contact: Contact }) {
+  const utils = api.useContext();
+  const deleteContactMutation = api.contacts.deleteContact.useMutation({
+    onSuccess: async () => {
+      await utils.contacts.invalidate();
+    },
+  });
+
   return (
     <div className="group/contact flex w-full items-center gap-4 py-3 first:pt-0">
       <div className="relative h-10 w-10 overflow-hidden rounded-full">
@@ -23,6 +30,12 @@ export function ContactListItem({ contact }: { contact: Contact }) {
         <Button iconSrc="/icons/Mute.svg" />
         <Button iconSrc="/icons/Call.svg" />
         <Button iconSrc="/icons/More.svg" />
+        <Button
+          iconSrc="/icons/Delete.svg"
+          onClick={() => {
+            deleteContactMutation.mutate({ contactId: contact.id });
+          }}
+        />
       </div>
     </div>
   );
