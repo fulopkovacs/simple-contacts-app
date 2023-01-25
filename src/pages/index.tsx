@@ -1,7 +1,5 @@
 import { type NextPage } from "next";
 import Head from "next/head";
-import Link from "next/link";
-import { AddContactButton, Button } from "../components/Button";
 import { ContactsList } from "../components/ContactsList";
 import { NavBar } from "../components/NavBar";
 import { PageContent } from "../components/PageContent";
