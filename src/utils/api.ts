@@ -44,6 +44,19 @@ export const api = createTRPCNext<AppRouter>({
           url: `${getBaseUrl()}/api/trpc`,
         }),
       ],
+      queryClientConfig: {
+        defaultOptions: {
+          queries: {
+            /*
+            20s of staleness helps relatively safely reducing
+            a lot of redundant network requests.
+            E.g: When both a parent and a child component runs
+            the same query, and they both have to rerender for some reason.
+          */
+            staleTime: 20 * 1000,
+          },
+        },
+      },
     };
   },
   /**
