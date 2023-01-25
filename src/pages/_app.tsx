@@ -15,7 +15,7 @@ const lexend = localFont({
 const MyApp: AppType = ({ Component, pageProps }) => {
   return (
     <main
-      className={`${glysa.variable} ${lexend.variable} bg-g-100 text-white`}
+      className={`${glysa.variable} ${lexend.variable} h-full bg-g-100 text-white`}
     >
       <Component {...pageProps} />
     </main>

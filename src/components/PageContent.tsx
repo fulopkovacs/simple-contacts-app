@@ -4,10 +4,8 @@ A reusable component that should wrap around the content of the page
 */
 export function PageContent({ children }: { children: React.ReactNode }) {
   return (
-    <div className="flex w-full justify-center">
-      <div className="min-h-screen w-[720px] border-x border-g-60 p-6">
-        {children}
-      </div>
+    <div className="flex min-h-fit w-full flex-grow justify-center">
+      <div className="w-[720px] border-x border-g-60 p-6">{children}</div>
     </div>
   );
 }

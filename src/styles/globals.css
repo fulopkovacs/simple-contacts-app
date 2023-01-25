@@ -5,8 +5,14 @@
 @layer base {
   /* Fixes the light bg behind the address bar in iOS Safari */
   root,
-  html {
+  html,
+  body {
     @apply bg-g-100;
+    height: 100%;
+  }
+
+  #__next {
+    height: 100%;
   }
 }
 

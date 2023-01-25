@@ -6,7 +6,7 @@ The navigation bar.
 */
 export function NavBar() {
   return (
-    <div className="grid w-full grid-cols-navbar grid-rows-2 border-b border-g-60">
+    <div className="grid w-full flex-grow-0 grid-cols-navbar grid-rows-2 border-b border-g-60">
       <div className=""></div>
       <div className="border-x border-g-60"></div>
       <div className=""></div>
