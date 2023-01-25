@@ -62,7 +62,9 @@ export function Body({
 }: TypographyComponentProps<HTMLParagraphElement>) {
   // Made a custom Tailwind class for this style,
   // because it's used in the `Button` component as well
-  return <p className={`type-body ${className}`}>{children}</p>;
+  return (
+    <span className={`type-body inline-block ${className}`}>{children}</span>
+  );
 }
 
 export function Message({
@@ -70,10 +72,10 @@ export function Message({
   className = "",
 }: TypographyComponentProps<HTMLParagraphElement>) {
   return (
-    <p
+    <span
       className={`font-lexend text-[12px] font-normal leading-[12px] tracking-[0.12px] ${className}`}
     >
       {children}
-    </p>
+    </span>
   );
 }
