@@ -1,14 +1,14 @@
 import { prisma } from "../src/server/db";
 
 async function main() {
-  const id = "cl9ebqhxk00003b600tymydho";
-  const { id: userId } = await prisma.user.upsert({
+  const userId = "39ad5f1f-7da1-48f4-8de3-ff29de51d5c5";
+  await prisma.user.upsert({
     where: {
-      id: "39ad5f1f-7da1-48f4-8de3-ff29de51d5c5",
+      id: userId,
     },
     create: {
       name: "Anonymous Unicorn",
-      id: "39ad5f1f-7da1-48f4-8de3-ff29de51d5c5",
+      id: userId,
     },
     update: {},
   });
@@ -26,8 +26,7 @@ async function main() {
       email: "sandra@example.com",
       id: "84502234-982f-4e83-bee2-b50327e1d85a",
     },
-  ].map(async ({ name, phone, email }) => {
-    // TODO: check why the second contact doesn't get saved
+  ].map(async ({ name, phone, email, id }) => {
     await prisma.contact.upsert({
       where: { id },
       create: {

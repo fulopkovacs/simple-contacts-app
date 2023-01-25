@@ -3,7 +3,7 @@ import type { ButtonHTMLAttributes, DetailedHTMLProps } from "react";
 
 type ButtonProps = {
   children?: React.ReactNode;
-  variant?: "primary" | "secondary";
+  primary?: boolean;
   iconSrc?: string;
 } & DetailedHTMLProps<
   ButtonHTMLAttributes<HTMLButtonElement>,
@@ -14,14 +14,14 @@ export function Button({
   children,
   className,
   iconSrc,
-  variant = "secondary",
+  primary = false,
   ...props
 }: ButtonProps) {
   return (
     <button
       className={`type-body flex h-[40px] w-max items-center justify-center gap-2 rounded-[8px] px-[16px] py-[8px] transition-colors
-      ${variant === "secondary" ? "bg-g-100 hover:bg-g-90 active:bg-g-80" : ""}
-      ${variant === "primary" ? " bg-g-60 hover:bg-g-50 active:bg-g-40" : ""}
+      ${!primary ? "bg-g-100 hover:bg-g-90 active:bg-g-80" : ""}
+      ${primary ? " bg-g-60 hover:bg-g-50 active:bg-g-40" : ""}
       ${iconSrc ? "pl-[12px]" : ""}
       ${!children ? "aspect-square pl-0 pr-0 pt-0 pb-0" : ""}
       ${className || ""}
@@ -42,7 +42,7 @@ export function AddContactButton({
   children,
   className,
   ...props
-}: Omit<ButtonProps, "variant" | "iconSrc">) {
+}: Omit<ButtonProps, "primary" | "iconSrc">) {
   return (
     <button
       className={`type-body relative rounded-full bg-gradient-to-b from-add-contact-border-1 to-add-contact-border-2 ${
