@@ -5,6 +5,7 @@ import Image from "next/image";
 import { Button } from "./Button";
 import { useContext } from "react";
 import { AddContactDialogContext } from "../pages";
+import { AnimatePresence, motion } from "framer-motion";
 
 export function ContactListItem({ contact }: { contact: Contact }) {
   const utils = api.useContext();
@@ -15,7 +16,11 @@ export function ContactListItem({ contact }: { contact: Contact }) {
   });
 
   return (
-    <div className="group/contact flex w-full items-center gap-4 py-3 first:pt-0">
+    <motion.div
+      layoutId={contact.id}
+      key={contact.id}
+      className="group/contact flex w-full items-center gap-4 py-3 first:pt-0"
+    >
       <div className="relative h-10 w-10 overflow-hidden rounded-full">
         <Image
           src="/profile-pics/Default.png"
@@ -39,7 +44,7 @@ export function ContactListItem({ contact }: { contact: Contact }) {
           }}
         />
       </div>
-    </div>
+    </motion.div>
   );
 }
 
@@ -53,21 +58,57 @@ export function ContactsList() {
   const contactsQuery = api.contacts.getAllContacts.useQuery({ userId });
   const { setIsOpen: dialogOpen } = useContext(AddContactDialogContext);
 
-  if (contactsQuery.isError) return <span>something went wrong</span>;
-  if (contactsQuery.isLoading) return <span>loading</span>;
-
-  return contactsQuery.data.length > 0 ? (
-    <div>
+  return (
+    <AnimatePresence>
+      {contactsQuery.isError && (
+        <motion.div
+          initial={{ opacity: 0 }}
+          animate={{ opacity: 1 }}
+          exit={{ opacity: 0 }}
+          key="error"
+          layoutId="error"
+        >
+          <Body>Something went wrong.</Body>
+        </motion.div>
+      )}
+      {contactsQuery.isLoading && (
+        <motion.div
+          initial={{ opacity: 0 }}
+          animate={{ opacity: 1 }}
+          exit={{ opacity: 0 }}
+          key="loading"
+          layoutId="loading"
+        >
+          {/**
+            NOTE: Normally I'd use a loading spinner here, but now I won't,
+            because you would barely even see it if you ran this project locally.
+            And this won't get depoloyed, so...
+           I'm gonna be lazy here ^^.
+          */}
+          <Body className="animate-pulse">Loading...</Body>
+        </motion.div>
+      )}
+      {contactsQuery.data?.length === 0 && (
+        <motion.div
+          key="no-contacts"
+          layoutId="no-contacts"
+          initial={{ opacity: 0 }}
+          animate={{ opacity: 1 }}
+          exit={{ opacity: 0 }}
+        >
+          <Body className="pb-4">You currently have no contacts.</Body>
+          <Button
+            primary
+            iconSrc="/icons/Add.svg"
+            onClick={() => dialogOpen(true)}
+          >
+            Add new contact
+          </Button>
+        </motion.div>
+      )}
       {contactsQuery.data?.map((contact) => (
         <ContactListItem key={contact.id} contact={contact} />
       ))}
-    </div>
-  ) : (
-    <>
-      <Body className="pb-4">You currently have no contacts.</Body>
-      <Button primary iconSrc="/icons/Add.svg" onClick={() => dialogOpen(true)}>
-        Add new contact
-      </Button>
-    </>
+    </AnimatePresence>
   );
 }
