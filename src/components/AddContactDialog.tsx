@@ -90,9 +90,8 @@ export function AddContactDialog() {
           }
         >
           <motion.div
-            aria-labelledby="add-contact-dialog-title"
             role={"dialog"}
-            className="fixed z-30 grid w-96 -translate-x-1/2 -translate-y-1/2 gap-6 bg-g-100 p-6 text-white"
+            className="z-10 grid w-[364px] gap-6 rounded-lg bg-g-100 p-6 text-white"
             initial={{
               opacity: 0,
               y: 10,
@@ -117,7 +116,7 @@ export function AddContactDialog() {
           >
             <Headline2 id="add-contact-dialog-title">Add contact</Headline2>
             <div className="flex items-center gap-4">
-              <div className="relative h-20 w-20 overflow-hidden rounded-full">
+              <div className="relative h-[88px] w-[88px] overflow-hidden rounded-full">
                 <motion.div
                   className="absolute h-full w-full overflow-hidden rounded-full"
                   initial={{ opacity: 0 }}
@@ -141,17 +140,53 @@ export function AddContactDialog() {
                 className="hidden"
                 accept="image/*"
               />
-              <Button
-                autoFocus
-                iconSrc="/icons/Add.svg"
-                primary
-                aria-label="Add picture"
-                onClick={() => {
-                  filePickerInput.current?.click();
-                }}
-              >
-                Add picture
-              </Button>
+              {profilePictureURL ? (
+                <motion.div
+                  className="flex justify-end gap-2"
+                  initial={{ opacity: 0 }}
+                  animate={{ opacity: 1 }}
+                  exit={{ opacity: 0 }}
+                  key="change-picture-button"
+                >
+                  <Button
+                    autoFocus
+                    iconSrc="/icons/Change.svg"
+                    primary
+                    aria-label="Add picture"
+                    onClick={() => {
+                      filePickerInput.current?.click();
+                    }}
+                  >
+                    Change picture
+                  </Button>
+                  <Button
+                    primary
+                    iconSrc="/icons/Delete.svg"
+                    onClick={() => {
+                      setProfilePicture(undefined);
+                    }}
+                  />
+                </motion.div>
+              ) : (
+                <motion.div
+                  key="add-picture-button"
+                  initial={{ opacity: 0 }}
+                  animate={{ opacity: 1 }}
+                  exit={{ opacity: 0 }}
+                >
+                  <Button
+                    autoFocus
+                    iconSrc="/icons/Add.svg"
+                    primary
+                    aria-label="Add picture"
+                    onClick={() => {
+                      filePickerInput.current?.click();
+                    }}
+                  >
+                    Add picture
+                  </Button>
+                </motion.div>
+              )}
             </div>
             <fieldset>
               <InputLabel htmlFor="contact-name">Name</InputLabel>
