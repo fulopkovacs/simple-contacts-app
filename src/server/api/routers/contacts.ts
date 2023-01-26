@@ -20,13 +20,18 @@ export const contactsRouter = createTRPCRouter({
         name: z.string(),
         phone: z.string().optional(),
         email: z.string().optional(),
+        profilePhoto: z.string().optional(),
       })
     )
-    .mutation(({ ctx, input }) => {
-      const data: typeof input = { name: input.name, userId: input.userId };
+    .mutation(async ({ ctx, input }) => {
+      const data: typeof input = {
+        name: input.name,
+        userId: input.userId,
+      };
       // TODO: validate phone numbers?
       if (input.phone) data.phone = input.phone;
       if (input.email) data.email = input.email;
+      if (input.profilePhoto) data.profilePhoto = input.profilePhoto;
 
       return ctx.prisma.contact.create({
         data,

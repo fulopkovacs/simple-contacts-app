@@ -1,9 +1,10 @@
 import { Button } from "./Button";
 import { Headline2, Message } from "./Typography";
 import Image from "next/image";
-import { ReactNode, useContext, useMemo, useRef, useState } from "react";
-import type { ChangeEvent } from "react";
+import { useContext, useMemo, useRef, useState } from "react";
 import type {
+  ReactNode,
+  ChangeEvent,
   DetailedHTMLProps,
   InputHTMLAttributes,
   LabelHTMLAttributes,
@@ -44,6 +45,15 @@ function Input({
   );
 }
 
+function blobToBase64(blob: File) {
+  return new Promise<string>((resolve) => {
+    const reader = new FileReader();
+    // TODO: remove this type casting if possible
+    reader.onloadend = () => resolve(reader.result as string);
+    reader.readAsDataURL(blob);
+  });
+}
+
 export function AddContactDialog() {
   const utils = api.useContext();
   const { isOpen: dialogOpen, setIsOpen: setIsDialogOpen } = useContext(
@@ -78,14 +88,25 @@ export function AddContactDialog() {
     },
   });
 
-  function saveAndCloseDialog() {
+  async function saveAndCloseDialog() {
     // `name` cannot be an empty string
     if (name) {
+      /* const profilePhoto = profilePicture
+        ? Buffer.from(await profilePicture.arrayBuffer())
+        : undefined; */
+
+      // if (profilePhoto) atob(profilePhoto.toString());
+      let profilePhoto;
+      if (profilePicture) {
+        profilePhoto = await blobToBase64(profilePicture);
+      }
+
       createContactMutation.mutate({
         name,
         email,
         userId,
         phone: phoneNumber,
+        profilePhoto,
       });
     } else {
       // error
@@ -281,7 +302,7 @@ export function AddContactDialog() {
               <Button
                 primary
                 onClick={() => {
-                  saveAndCloseDialog();
+                  void saveAndCloseDialog();
                 }}
               >
                 Done
