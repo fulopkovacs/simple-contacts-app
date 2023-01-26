@@ -10,6 +10,8 @@ import type {
 } from "react";
 import { AddContactDialogContext } from "../pages";
 import { AnimatePresence, motion } from "framer-motion";
+import PhoneNumberInput from "react-phone-number-input/input";
+import type { Value as E164Number } from "react-phone-number-input";
 
 function InputLabel({
   children,
@@ -41,20 +43,18 @@ function Input({
 }
 
 export function AddContactDialog() {
-  // const [dialogOpen, setIsDialogOpen] = useState(true);
   const { isOpen: dialogOpen, setIsOpen: setIsDialogOpen } = useContext(
     AddContactDialogContext
   );
 
-  const [profilePicture, setProfilePicture] = useState<File | undefined>(
-    undefined
-  );
+  const [profilePicture, setProfilePicture] = useState<File | undefined>();
 
   const profilePictureURL = useMemo(
     () => (profilePicture ? URL.createObjectURL(profilePicture) : undefined),
     [profilePicture]
   );
 
+  const [phoneNumber, setPhoneNumber] = useState<E164Number>();
   function closeDialog() {
     setProfilePicture(undefined);
     setIsDialogOpen(false);
@@ -198,10 +198,11 @@ export function AddContactDialog() {
             </fieldset>
             <fieldset>
               <InputLabel htmlFor="contact-phone">Name</InputLabel>
-              // TODO: Create a phone input
-              <Input
+              <PhoneNumberInput
                 id="contact-phone"
-                placeholder="+01 2345678"
+                placeholder="+01 234 5678"
+                value={phoneNumber}
+                onChange={setPhoneNumber}
                 type={"tel"}
               />
             </fieldset>

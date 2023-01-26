@@ -14,6 +14,21 @@
   #__next {
     height: 100%;
   }
+
+  /*
+  Customize the styling of `react-phone-number-input`.
+   */
+  #contact-phone {
+    @apply w-full;
+    @apply rounded-lg;
+    @apply border;
+    @apply border-g-60;
+    @apply bg-g-80;
+    @apply px-3;
+    @apply py-[11px];
+    @apply outline-none;
+    @apply placeholder:opacity-disabled;
+  }
 }
 
 @layer components {
