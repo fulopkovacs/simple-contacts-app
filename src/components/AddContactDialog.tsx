@@ -1,7 +1,7 @@
 import { Button } from "./Button";
 import { Headline2, Message } from "./Typography";
 import Image from "next/image";
-import { useContext, useMemo, useRef, useState } from "react";
+import { ReactNode, useContext, useMemo, useRef, useState } from "react";
 import type { ChangeEvent } from "react";
 import type {
   DetailedHTMLProps,
@@ -19,7 +19,7 @@ function InputLabel({
   children,
   className,
   ...props
-}: { children: string } & DetailedHTMLProps<
+}: { children: ReactNode } & DetailedHTMLProps<
   LabelHTMLAttributes<HTMLLabelElement>,
   HTMLLabelElement
 >) {
@@ -59,6 +59,7 @@ export function AddContactDialog() {
 
   const [phoneNumber, setPhoneNumber] = useState<E164Number>();
   const [name, setName] = useState("");
+  const [isNameMissing, setIsNameMissing] = useState(false);
   const [email, setEmail] = useState("");
 
   function closeDialog() {
@@ -67,6 +68,7 @@ export function AddContactDialog() {
     setName("");
     setPhoneNumber("");
     setEmail("");
+    setIsNameMissing(false);
   }
 
   const createContactMutation = api.contacts.createContact.useMutation({
@@ -77,12 +79,18 @@ export function AddContactDialog() {
   });
 
   function saveAndCloseDialog() {
-    createContactMutation.mutate({
-      name,
-      email,
-      userId,
-      phone: phoneNumber,
-    });
+    // `name` cannot be an empty string
+    if (name) {
+      createContactMutation.mutate({
+        name,
+        email,
+        userId,
+        phone: phoneNumber,
+      });
+    } else {
+      // error
+      setIsNameMissing(true);
+    }
   }
 
   function handleImageFile(event: ChangeEvent<HTMLInputElement>) {
@@ -214,13 +222,30 @@ export function AddContactDialog() {
               )}
             </div>
             <fieldset>
-              <InputLabel htmlFor="contact-name">Name</InputLabel>
+              <InputLabel htmlFor="contact-name">
+                Name
+                <span
+                  className={`opacity-0 transition-opacity ${
+                    isNameMissing ? "text-red-400 opacity-100" : ""
+                  }`}
+                >
+                  {" "}
+                  *Required
+                </span>
+              </InputLabel>
               <Input
                 id="contact-name"
                 value={name}
-                onChange={(e) => setName(e.target.value)}
+                onChange={(e) => {
+                  const { value } = e.target;
+                  setIsNameMissing(!value);
+                  setName(value);
+                }}
                 placeholder="Jamie Wright"
                 type={"text"}
+                className={
+                  isNameMissing ? "border-red-400 transition-colors" : ""
+                }
               />
             </fieldset>
             <fieldset>
