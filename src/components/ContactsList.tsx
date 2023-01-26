@@ -59,56 +59,59 @@ export function ContactsList() {
   const { setIsOpen: dialogOpen } = useContext(AddContactDialogContext);
 
   return (
-    <AnimatePresence>
-      {contactsQuery.isError && (
-        <motion.div
-          initial={{ opacity: 0 }}
-          animate={{ opacity: 1 }}
-          exit={{ opacity: 0 }}
-          key="error"
-          layoutId="error"
-        >
-          <Body>Something went wrong.</Body>
-        </motion.div>
-      )}
-      {contactsQuery.isLoading && (
-        <motion.div
-          initial={{ opacity: 0 }}
-          animate={{ opacity: 1 }}
-          exit={{ opacity: 0 }}
-          key="loading"
-          layoutId="loading"
-        >
-          {/**
-            NOTE: Normally I'd use a loading spinner here, but now I won't,
-            because you would barely even see it if you ran this project locally.
-            And this won't get depoloyed, so...
-           I'm gonna be lazy here ^^.
-          */}
-          <Body className="animate-pulse">Loading...</Body>
-        </motion.div>
-      )}
-      {contactsQuery.data?.length === 0 && (
-        <motion.div
-          key="no-contacts"
-          layoutId="no-contacts"
-          initial={{ opacity: 0 }}
-          animate={{ opacity: 1 }}
-          exit={{ opacity: 0 }}
-        >
-          <Body className="pb-4">You currently have no contacts.</Body>
-          <Button
-            primary
-            iconSrc="/icons/Add.svg"
-            onClick={() => dialogOpen(true)}
+    <div className="flex w-full flex-col items-center justify-center">
+      <AnimatePresence>
+        {contactsQuery.isError && (
+          <motion.div
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            exit={{ opacity: 0 }}
+            key="error"
+            layoutId="error"
           >
-            Add new contact
-          </Button>
-        </motion.div>
-      )}
-      {contactsQuery.data?.map((contact) => (
-        <ContactListItem key={contact.id} contact={contact} />
-      ))}
-    </AnimatePresence>
+            <Body>Something went wrong.</Body>
+          </motion.div>
+        )}
+        {contactsQuery.isLoading && (
+          <motion.div
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            exit={{ opacity: 0 }}
+            key="loading"
+            layoutId="loading"
+          >
+            {/**
+      NOTE: Normally I'd use a loading spinner here, but now I won't,
+      because you would barely even see it if you ran this project locally.
+      And this won't get depoloyed, so...
+      I'm gonna be lazy here ^^.
+      */}
+            <Body className="animate-pulse">Loading...</Body>
+          </motion.div>
+        )}
+        {contactsQuery.data?.length === 0 && (
+          <motion.div
+            key="no-contacts"
+            layoutId="no-contacts"
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            exit={{ opacity: 0 }}
+            className="flex flex-col items-center"
+          >
+            <Body className="pb-4">You currently have no contacts.</Body>
+            <Button
+              primary
+              iconSrc="/icons/Add.svg"
+              onClick={() => dialogOpen(true)}
+            >
+              Add new contact
+            </Button>
+          </motion.div>
+        )}
+        {contactsQuery.data?.map((contact) => (
+          <ContactListItem key={contact.id} contact={contact} />
+        ))}
+      </AnimatePresence>
+    </div>
   );
 }
