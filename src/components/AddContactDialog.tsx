@@ -119,7 +119,7 @@ export function AddContactDialog() {
             <div className="flex items-center gap-4">
               <div className="relative h-20 w-20 overflow-hidden rounded-full">
                 <motion.div
-                  className="absolute h-full w-full"
+                  className="absolute h-full w-full overflow-hidden rounded-full"
                   initial={{ opacity: 0 }}
                   animate={{ opacity: 1 }}
                   exit={{ opacity: 0 }}
