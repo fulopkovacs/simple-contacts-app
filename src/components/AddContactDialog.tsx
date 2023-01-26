@@ -1,12 +1,13 @@
-import { AddContactButton, Button } from "./Button";
+import { Button } from "./Button";
 import { Headline2, Message } from "./Typography";
 import Image from "next/image";
+import { useContext } from "react";
 import type {
   DetailedHTMLProps,
   InputHTMLAttributes,
   LabelHTMLAttributes,
 } from "react";
-import { useState } from "react";
+import { AddContactDialogContext } from "../pages";
 
 function TextInputLabel({
   children,
@@ -37,14 +38,14 @@ function TextInput({
   );
 }
 
-export function AddContactDialogButton({ children }: { children: string }) {
-  const [dialogOpen, setIsDialogOpen] = useState(true);
+export function AddContactDialog() {
+  // const [dialogOpen, setIsDialogOpen] = useState(true);
+  const { isOpen: dialogOpen, setIsOpen: setIsDialogOpen } = useContext(
+    AddContactDialogContext
+  );
 
   return (
     <>
-      <AddContactButton onClick={() => setIsDialogOpen(true)}>
-        {children}
-      </AddContactButton>
       {dialogOpen && (
         <>
           <div
@@ -87,6 +88,7 @@ export function AddContactDialogButton({ children }: { children: string }) {
             </fieldset>
             <fieldset>
               <TextInputLabel htmlFor="contact-phone">Name</TextInputLabel>
+              // TODO: Create a phone input
               <TextInput
                 id="contact-phone"
                 placeholder="+01 2345678"

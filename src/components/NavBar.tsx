@@ -1,10 +1,13 @@
-import { AddContactDialogButton } from "./AddContactDialog";
-import { Button } from "./Button";
+import { useContext } from "react";
+import { AddContactDialogContext } from "../pages";
+import { AddContactButton, Button } from "./Button";
 import { Headline1 } from "./Typography";
 /**
 The navigation bar.
 */
 export function NavBar() {
+  const { setIsOpen: setIsDialogOpen } = useContext(AddContactDialogContext);
+
   return (
     <div className="grid w-full flex-grow-0 grid-cols-navbar grid-rows-2 border-b border-g-60">
       <div className=""></div>
@@ -19,7 +22,9 @@ export function NavBar() {
           <Button iconSrc="/icons/Settings.svg" />
           <Button iconSrc="/icons/Profile-pic.png"></Button>
         </div>
-        <AddContactDialogButton>Add new</AddContactDialogButton>
+        <AddContactButton onClick={() => setIsDialogOpen(true)}>
+          Add new
+        </AddContactButton>
       </div>
       <div className="flex items-center justify-start border-t border-g-60 pl-6">
         <Button iconSrc="/icons/Light-mode.svg"></Button>
