@@ -1,7 +1,7 @@
 import { Button } from "./Button";
 import { Headline2, Message } from "./Typography";
 import Image from "next/image";
-import { useContext, useRef, useState } from "react";
+import { useContext, useMemo, useRef, useState } from "react";
 import type { ChangeEvent } from "react";
 import type {
   DetailedHTMLProps,
@@ -9,6 +9,7 @@ import type {
   LabelHTMLAttributes,
 } from "react";
 import { AddContactDialogContext } from "../pages";
+import { AnimatePresence, motion } from "framer-motion";
 
 function InputLabel({
   children,
@@ -49,6 +50,16 @@ export function AddContactDialog() {
     undefined
   );
 
+  const profilePictureURL = useMemo(
+    () => (profilePicture ? URL.createObjectURL(profilePicture) : undefined),
+    [profilePicture]
+  );
+
+  function closeDialog() {
+    setProfilePicture(undefined);
+    setIsDialogOpen(false);
+  }
+
   function handleImageFile(event: ChangeEvent<HTMLInputElement>) {
     if (event.target.files) {
       const [imageFile] = event.target.files;
@@ -64,7 +75,7 @@ export function AddContactDialog() {
         <>
           <div
             className="fixed top-0 left-0 z-20 h-screen w-screen bg-black opacity-40"
-            onClick={() => setIsDialogOpen(false)}
+            onClick={() => closeDialog()}
           />
           <div
             aria-labelledby="add-contact-dialog-title"
@@ -73,7 +84,7 @@ export function AddContactDialog() {
             onKeyUp={(e) => {
               // Close the dialog with "Esc"
               if (e.key === "Escape") {
-                setIsDialogOpen(false);
+                closeDialog();
                 e.stopPropagation();
               }
             }}
@@ -81,21 +92,23 @@ export function AddContactDialog() {
             <Headline2 id="add-contact-dialog-title">Add contact</Headline2>
             <div className="flex items-center gap-4">
               <div className="relative h-20 w-20 overflow-hidden rounded-full">
-                {profilePicture ? (
-                  <Image
-                    src={URL.createObjectURL(profilePicture)}
-                    alt=""
-                    fill
-                    className="object-cover"
-                  />
-                ) : (
-                  <Image
-                    src="/profile-pics/Default.png"
-                    alt=""
-                    fill
-                    className="object-cover"
-                  />
-                )}
+                <AnimatePresence>
+                  <motion.div
+                    className="absolute h-full w-full"
+                    initial={{ opacity: 0 }}
+                    animate={{ opacity: 1 }}
+                    exit={{ opacity: 0 }}
+                    transition={{ duration: 0.3 }}
+                    key={profilePictureURL || "default-profile-pic"}
+                  >
+                    <Image
+                      src={profilePictureURL || "/profile-pics/Default.png"}
+                      alt=""
+                      fill
+                      className="object-cover"
+                    />
+                  </motion.div>
+                </AnimatePresence>
               </div>
               <input
                 onChange={handleImageFile}
@@ -144,7 +157,7 @@ export function AddContactDialog() {
             <div className="flex justify-end gap-2 pt-6">
               <Button
                 onClick={() => {
-                  setIsDialogOpen(false);
+                  closeDialog();
                 }}
               >
                 Cancel
@@ -152,7 +165,7 @@ export function AddContactDialog() {
               <Button
                 primary
                 onClick={() => {
-                  setIsDialogOpen(false);
+                  closeDialog();
                 }}
               >
                 Done
