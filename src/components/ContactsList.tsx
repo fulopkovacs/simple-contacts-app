@@ -24,7 +24,7 @@ export function ContactListItem({ contact }: { contact: Contact }) {
     >
       <div className="relative h-10 w-10 overflow-hidden rounded-full">
         <Image
-          src="/profile-pics/Default.png"
+          src={contact.profilePhoto || "/profile-pics/Default.png"}
           fill
           alt=""
           className="object-cover"

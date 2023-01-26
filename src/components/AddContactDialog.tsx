@@ -47,6 +47,7 @@ function Input({
 
 function blobToBase64(blob: File) {
   return new Promise<string>((resolve) => {
+    // TODO: It's probably not a good idea to create a new FileReader() everytime this function is executed
     const reader = new FileReader();
     // TODO: remove this type casting if possible
     reader.onloadend = () => resolve(reader.result as string);
@@ -60,11 +61,11 @@ export function AddContactDialog() {
     AddContactDialogContext
   );
 
-  const [profilePicture, setProfilePicture] = useState<File | undefined>();
+  const [profilePhoto, setProfilePhoto] = useState<File | undefined>();
 
   const profilePictureURL = useMemo(
-    () => (profilePicture ? URL.createObjectURL(profilePicture) : undefined),
-    [profilePicture]
+    () => (profilePhoto ? URL.createObjectURL(profilePhoto) : undefined),
+    [profilePhoto]
   );
 
   const [phoneNumber, setPhoneNumber] = useState<E164Number>();
@@ -73,7 +74,7 @@ export function AddContactDialog() {
   const [email, setEmail] = useState("");
 
   function closeDialog() {
-    setProfilePicture(undefined);
+    setProfilePhoto(undefined);
     setIsDialogOpen(false);
     setName("");
     setPhoneNumber("");
@@ -91,25 +92,17 @@ export function AddContactDialog() {
   async function saveAndCloseDialog() {
     // `name` cannot be an empty string
     if (name) {
-      /* const profilePhoto = profilePicture
-        ? Buffer.from(await profilePicture.arrayBuffer())
-        : undefined; */
-
-      // if (profilePhoto) atob(profilePhoto.toString());
-      let profilePhoto;
-      if (profilePicture) {
-        profilePhoto = await blobToBase64(profilePicture);
-      }
-
       createContactMutation.mutate({
         name,
         email,
         userId,
         phone: phoneNumber,
-        profilePhoto,
+        // TODO: make sure that the size of profilePhoto does not exceed 4MB
+        profilePhoto: profilePhoto
+          ? await blobToBase64(profilePhoto)
+          : undefined,
       });
     } else {
-      // error
       setIsNameMissing(true);
     }
   }
@@ -117,7 +110,7 @@ export function AddContactDialog() {
   function handleImageFile(event: ChangeEvent<HTMLInputElement>) {
     if (event.target.files) {
       const [imageFile] = event.target.files;
-      setProfilePicture(imageFile);
+      setProfilePhoto(imageFile);
     }
   }
 
@@ -217,7 +210,7 @@ export function AddContactDialog() {
                     primary
                     iconSrc="/icons/Delete.svg"
                     onClick={() => {
-                      setProfilePicture(undefined);
+                      setProfilePhoto(undefined);
                     }}
                   />
                 </motion.div>

@@ -31,6 +31,9 @@ export const contactsRouter = createTRPCRouter({
       // TODO: validate phone numbers?
       if (input.phone) data.phone = input.phone;
       if (input.email) data.email = input.email;
+      // TODO: Explain in a comment why trpc is not good for uploading images (json only),
+      // and why we should use pre-signed URLs and Object Storage-s anyways:
+      // https://github.com/trpc/trpc/discussions/658#discussioncomment-998746
       if (input.profilePhoto) data.profilePhoto = input.profilePhoto;
 
       return ctx.prisma.contact.create({
