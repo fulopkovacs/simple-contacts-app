@@ -197,7 +197,7 @@ export function AddContactDialog() {
               />
             </fieldset>
             <fieldset>
-              <InputLabel htmlFor="contact-phone">Name</InputLabel>
+              <InputLabel htmlFor="contact-phone">Phone number</InputLabel>
               <PhoneNumberInput
                 id="contact-phone"
                 placeholder="+01 234 5678"
@@ -207,7 +207,7 @@ export function AddContactDialog() {
               />
             </fieldset>
             <fieldset>
-              <InputLabel htmlFor="contact-email">Name</InputLabel>
+              <InputLabel htmlFor="contact-email">Email address</InputLabel>
               <Input
                 id="contact-email"
                 placeholder="jamie.wright@mail.com"
