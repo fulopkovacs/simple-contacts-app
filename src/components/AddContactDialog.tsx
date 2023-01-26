@@ -1,7 +1,8 @@
 import { Button } from "./Button";
 import { Headline2, Message } from "./Typography";
 import Image from "next/image";
-import { useContext } from "react";
+import { useContext, useRef, useState } from "react";
+import type { ChangeEvent } from "react";
 import type {
   DetailedHTMLProps,
   InputHTMLAttributes,
@@ -9,7 +10,7 @@ import type {
 } from "react";
 import { AddContactDialogContext } from "../pages";
 
-function TextInputLabel({
+function InputLabel({
   children,
   className,
   ...props
@@ -24,7 +25,7 @@ function TextInputLabel({
   );
 }
 
-function TextInput({
+function Input({
   className,
   ...props
 }: DetailedHTMLProps<InputHTMLAttributes<HTMLInputElement>, HTMLInputElement>) {
@@ -43,6 +44,19 @@ export function AddContactDialog() {
   const { isOpen: dialogOpen, setIsOpen: setIsDialogOpen } = useContext(
     AddContactDialogContext
   );
+
+  const [profilePicture, setProfilePicture] = useState<File | undefined>(
+    undefined
+  );
+
+  function handleImageFile(event: ChangeEvent<HTMLInputElement>) {
+    if (event.target.files) {
+      const [imageFile] = event.target.files;
+      setProfilePicture(imageFile);
+    }
+  }
+
+  const filePickerInput = useRef<HTMLInputElement>(null);
 
   return (
     <>
@@ -67,37 +81,61 @@ export function AddContactDialog() {
             <Headline2 id="add-contact-dialog-title">Add contact</Headline2>
             <div className="flex items-center gap-4">
               <div className="relative h-20 w-20 overflow-hidden rounded-full">
-                <Image
-                  src="/profile-pics/Default.png"
-                  alt=""
-                  fill
-                  className="object-cover"
-                />
+                {profilePicture ? (
+                  <Image
+                    src={URL.createObjectURL(profilePicture)}
+                    alt=""
+                    fill
+                    className="object-cover"
+                  />
+                ) : (
+                  <Image
+                    src="/profile-pics/Default.png"
+                    alt=""
+                    fill
+                    className="object-cover"
+                  />
+                )}
               </div>
-              <Button autoFocus iconSrc="/icons/Add.svg" primary>
+              <input
+                onChange={handleImageFile}
+                ref={filePickerInput}
+                type="file"
+                className="hidden"
+                accept="image/*"
+              />
+              <Button
+                autoFocus
+                iconSrc="/icons/Add.svg"
+                primary
+                aria-label="Add picture"
+                onClick={() => {
+                  filePickerInput.current?.click();
+                }}
+              >
                 Add picture
               </Button>
             </div>
             <fieldset>
-              <TextInputLabel htmlFor="contact-name">Name</TextInputLabel>
-              <TextInput
+              <InputLabel htmlFor="contact-name">Name</InputLabel>
+              <Input
                 id="contact-name"
                 placeholder="Jamie Wright"
                 type={"text"}
               />
             </fieldset>
             <fieldset>
-              <TextInputLabel htmlFor="contact-phone">Name</TextInputLabel>
+              <InputLabel htmlFor="contact-phone">Name</InputLabel>
               // TODO: Create a phone input
-              <TextInput
+              <Input
                 id="contact-phone"
                 placeholder="+01 2345678"
-                type={"text"}
+                type={"tel"}
               />
             </fieldset>
             <fieldset>
-              <TextInputLabel htmlFor="contact-email">Name</TextInputLabel>
-              <TextInput
+              <InputLabel htmlFor="contact-email">Name</InputLabel>
+              <Input
                 id="contact-email"
                 placeholder="jamie.wright@mail.com"
                 type={"text"}
