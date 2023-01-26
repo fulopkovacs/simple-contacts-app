@@ -6,6 +6,7 @@ import { Button } from "./Button";
 import { useContext } from "react";
 import { AddContactDialogContext } from "../pages";
 import { AnimatePresence, motion } from "framer-motion";
+import { userId } from "./constants";
 
 export function ContactListItem({ contact }: { contact: Contact }) {
   const utils = api.useContext();
@@ -49,12 +50,6 @@ export function ContactListItem({ contact }: { contact: Contact }) {
 }
 
 export function ContactsList() {
-  /**
-  This harcoded value would be retrieved from the session data
-  of the authenticated user in a production-ready application.
-  */
-  const userId = "39ad5f1f-7da1-48f4-8de3-ff29de51d5c5";
-
   const contactsQuery = api.contacts.getAllContacts.useQuery({ userId });
   const { setIsOpen: dialogOpen } = useContext(AddContactDialogContext);
 

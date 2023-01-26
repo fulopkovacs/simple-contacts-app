@@ -12,6 +12,8 @@ import { AddContactDialogContext } from "../pages";
 import { AnimatePresence, motion } from "framer-motion";
 import PhoneNumberInput from "react-phone-number-input/input";
 import type { Value as E164Number } from "react-phone-number-input";
+import { api } from "../utils/api";
+import { userId } from "./constants";
 
 function InputLabel({
   children,
@@ -43,6 +45,7 @@ function Input({
 }
 
 export function AddContactDialog() {
+  const utils = api.useContext();
   const { isOpen: dialogOpen, setIsOpen: setIsDialogOpen } = useContext(
     AddContactDialogContext
   );
@@ -55,9 +58,31 @@ export function AddContactDialog() {
   );
 
   const [phoneNumber, setPhoneNumber] = useState<E164Number>();
+  const [name, setName] = useState("");
+  const [email, setEmail] = useState("");
+
   function closeDialog() {
     setProfilePicture(undefined);
     setIsDialogOpen(false);
+    setName("");
+    setPhoneNumber("");
+    setEmail("");
+  }
+
+  const createContactMutation = api.contacts.createContact.useMutation({
+    onSuccess: async () => {
+      await utils.contacts.invalidate();
+      closeDialog();
+    },
+  });
+
+  function saveAndCloseDialog() {
+    createContactMutation.mutate({
+      name,
+      email,
+      userId,
+      phone: phoneNumber,
+    });
   }
 
   function handleImageFile(event: ChangeEvent<HTMLInputElement>) {
@@ -192,6 +217,8 @@ export function AddContactDialog() {
               <InputLabel htmlFor="contact-name">Name</InputLabel>
               <Input
                 id="contact-name"
+                value={name}
+                onChange={(e) => setName(e.target.value)}
                 placeholder="Jamie Wright"
                 type={"text"}
               />
@@ -210,6 +237,10 @@ export function AddContactDialog() {
               <InputLabel htmlFor="contact-email">Email address</InputLabel>
               <Input
                 id="contact-email"
+                value={email}
+                onChange={(e) => {
+                  setEmail(e.target.value);
+                }}
                 placeholder="jamie.wright@mail.com"
                 type={"text"}
               />
@@ -225,7 +256,7 @@ export function AddContactDialog() {
               <Button
                 primary
                 onClick={() => {
-                  closeDialog();
+                  saveAndCloseDialog();
                 }}
               >
                 Done

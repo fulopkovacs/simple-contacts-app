@@ -13,4 +13,23 @@ export const contactsRouter = createTRPCRouter({
     .mutation(({ ctx, input }) => {
       return ctx.prisma.contact.delete({ where: { id: input.contactId } });
     }),
+  createContact: publicProcedure
+    .input(
+      z.object({
+        userId: z.string().uuid(),
+        name: z.string(),
+        phone: z.string().optional(),
+        email: z.string().optional(),
+      })
+    )
+    .mutation(({ ctx, input }) => {
+      const data: typeof input = { name: input.name, userId: input.userId };
+      // TODO: validate phone numbers?
+      if (input.phone) data.phone = input.phone;
+      if (input.email) data.email = input.email;
+
+      return ctx.prisma.contact.create({
+        data,
+      });
+    }),
 });
