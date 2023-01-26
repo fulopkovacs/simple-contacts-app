@@ -1,8 +1,10 @@
 import type { Contact } from "@prisma/client";
 import { api } from "../utils/api";
-import { Headline3, Message } from "./Typography";
+import { Body, Headline3, Message } from "./Typography";
 import Image from "next/image";
 import { Button } from "./Button";
+import { useContext } from "react";
+import { AddContactDialogContext } from "../pages";
 
 export function ContactListItem({ contact }: { contact: Contact }) {
   const utils = api.useContext();
@@ -49,15 +51,23 @@ export function ContactsList() {
   const userId = "39ad5f1f-7da1-48f4-8de3-ff29de51d5c5";
 
   const contactsQuery = api.contacts.getAllContacts.useQuery({ userId });
+  const { setIsOpen: dialogOpen } = useContext(AddContactDialogContext);
 
   if (contactsQuery.isError) return <span>something went wrong</span>;
   if (contactsQuery.isLoading) return <span>loading</span>;
 
-  return (
+  return contactsQuery.data.length > 0 ? (
     <div>
       {contactsQuery.data?.map((contact) => (
         <ContactListItem key={contact.id} contact={contact} />
       ))}
     </div>
+  ) : (
+    <>
+      <Body className="pb-4">You currently have no contacts.</Body>
+      <Button primary iconSrc="/icons/Add.svg" onClick={() => dialogOpen(true)}>
+        Add new contact
+      </Button>
+    </>
   );
 }
