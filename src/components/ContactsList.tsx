@@ -3,18 +3,81 @@ import { api } from "../utils/api";
 import { Body, Headline3, Message } from "./Typography";
 import Image from "next/image";
 import { Button } from "./Button";
-import { useContext } from "react";
+import { useContext, useState } from "react";
 import { AddContactDialogContext } from "../pages";
 import { AnimatePresence, motion } from "framer-motion";
 import { userId } from "./constants";
+import * as DropdownMenu from "@radix-ui/react-dropdown-menu";
 
-export function ContactListItem({ contact }: { contact: Contact }) {
+export function ContactDropdownMenu({
+  contact,
+  dropdownMenuOpen,
+  setDropdownMenuOpen: setDropdownMenuOpen,
+}: {
+  contact: Contact;
+  dropdownMenuOpen: boolean;
+  setDropdownMenuOpen: (newValue: boolean) => void;
+}) {
   const utils = api.useContext();
   const deleteContactMutation = api.contacts.deleteContact.useMutation({
     onSuccess: async () => {
       await utils.contacts.invalidate();
     },
   });
+
+  /*
+  NOTE: This code could be simplified by creating components from the repetitive parts,
+  but I think it would make the reviewers' work harder (too many components to keep in mind),
+  so I'll just leave this here.
+  */
+  return (
+    <DropdownMenu.Root
+      open={dropdownMenuOpen}
+      onOpenChange={setDropdownMenuOpen}
+    >
+      <DropdownMenu.Trigger
+        className={`type-body flex aspect-square h-[40px] w-max items-center justify-center gap-2 rounded-[8px] px-[16px]  py-[8px] pl-0 pr-0 pt-0 pb-0 outline-none transition-colors hover:bg-g-90 active:bg-g-80 ${
+          dropdownMenuOpen ? "bg-g-80" : "bg-g-100"
+        }`}
+      >
+        <span className="relative inline-block h-6 w-6">
+          <Image src={"/icons/More.svg"} alt="" fill />
+        </span>
+      </DropdownMenu.Trigger>
+      <DropdownMenu.Content
+        className="mt-3 w-[219px] overflow-hidden rounded-lg bg-g-80"
+        align="start"
+      >
+        <DropdownMenu.Item className="active:bg-60 flex items-center gap-3 p-3 outline-none transition-opacity hover:bg-g-70">
+          <div className="relative inline-block h-6 w-6 opacity-secondary">
+            <Image src={"/icons/Settings.svg"} alt="" fill />
+          </div>
+          <Body>Edit</Body>
+        </DropdownMenu.Item>
+        <DropdownMenu.Item className="active:bg-60 flex items-center gap-3 p-3 outline-none transition-opacity hover:bg-g-70">
+          <div className="relative inline-block h-6 w-6 opacity-secondary">
+            <Image src={"/icons/Favourite.svg"} alt="" fill />
+          </div>
+          <Body>Favourite</Body>
+        </DropdownMenu.Item>
+        <DropdownMenu.Item
+          className="active:bg-60 flex items-center gap-3 p-3 outline-none hover:bg-g-70"
+          onClick={() => {
+            deleteContactMutation.mutate({ contactId: contact.id });
+          }}
+        >
+          <div className="relative inline-block h-6 w-6 opacity-secondary transition-opacity">
+            <Image src={"/icons/Delete.svg"} alt="" fill />
+          </div>
+          <Body>Remove</Body>
+        </DropdownMenu.Item>
+      </DropdownMenu.Content>
+    </DropdownMenu.Root>
+  );
+}
+
+export function ContactListItem({ contact }: { contact: Contact }) {
+  const [dropdownMenuOpen, setDropdownMenuOpen] = useState(false);
 
   return (
     <motion.div
@@ -34,15 +97,17 @@ export function ContactListItem({ contact }: { contact: Contact }) {
         <Headline3>{contact.name}</Headline3>
         <Message className="opacity-secondary">{contact.phone || "-"}</Message>
       </div>
-      <div className="flex flex-grow items-center justify-end gap-2 opacity-0 group-hover/contact:opacity-100">
+      <div
+        className={`flex flex-grow items-center justify-end gap-2 transition-opacity group-hover/contact:opacity-100 ${
+          dropdownMenuOpen ? "opacity-100" : "opacity-0"
+        }`}
+      >
         <Button iconSrc="/icons/Mute.svg" />
         <Button iconSrc="/icons/Call.svg" />
-        <Button iconSrc="/icons/More.svg" />
-        <Button
-          iconSrc="/icons/Delete.svg"
-          onClick={() => {
-            deleteContactMutation.mutate({ contactId: contact.id });
-          }}
+        <ContactDropdownMenu
+          contact={contact}
+          setDropdownMenuOpen={setDropdownMenuOpen}
+          dropdownMenuOpen={dropdownMenuOpen}
         />
       </div>
     </motion.div>
