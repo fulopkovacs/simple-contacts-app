@@ -36,7 +36,7 @@ export function ContactDropdownMenu({
       onOpenChange={setDropdownMenuOpen}
     >
       <DropdownMenu.Trigger
-        className={`type-body flex aspect-square h-[40px] w-max items-center justify-center gap-2 rounded-[8px] px-[16px]  py-[8px] pl-0 pr-0 pt-0 pb-0 outline-none transition-colors hover:bg-g-90 active:bg-g-80 ${
+        className={`type-body flex aspect-square h-10 w-max items-center justify-center gap-2 rounded-lg outline-none transition-colors hover:bg-g-90 active:bg-g-80 ${
           dropdownMenuOpen ? "bg-g-80" : "bg-g-100"
         }`}
       >
