@@ -45,6 +45,8 @@ function Input({
   );
 }
 
+// This function was borrowed from Arun Killu:
+// https://stackoverflow.com/a/18650249
 function blobToBase64(blob: File) {
   return new Promise<string>((resolve) => {
     // TODO: It's probably not a good idea to create a new FileReader() everytime this function is executed
@@ -72,6 +74,7 @@ export function AddContactDialog() {
   const [name, setName] = useState("");
   const [isNameMissing, setIsNameMissing] = useState(false);
   const [email, setEmail] = useState("");
+  const [imageTooBigMessage, setImageTooBigMessage] = useState(false);
 
   function closeDialog() {
     setProfilePhoto(undefined);
@@ -87,29 +90,36 @@ export function AddContactDialog() {
       await utils.contacts.invalidate();
       closeDialog();
     },
+    onError: (error) => {
+      // TODO: do something with the errors
+      console.log(error);
+    },
   });
 
   async function saveAndCloseDialog() {
-    // `name` cannot be an empty string
-    if (name) {
+    if (
+      // `name` cannot be `undefined`
+      name &&
+      // Image size shouldn't be over 4MB
+      !imageTooBigMessage
+    ) {
       createContactMutation.mutate({
         name,
         email,
         userId,
         phone: phoneNumber,
         // TODO: make sure that the size of profilePhoto does not exceed 4MB
-        profilePhoto: profilePhoto
-          ? await blobToBase64(profilePhoto)
-          : undefined,
+        profilePhoto: profilePhoto && (await blobToBase64(profilePhoto)),
       });
     } else {
-      setIsNameMissing(true);
+      if (!name) setIsNameMissing(true);
     }
   }
 
   function handleImageFile(event: ChangeEvent<HTMLInputElement>) {
     if (event.target.files) {
       const [imageFile] = event.target.files;
+      setImageTooBigMessage(!imageFile || imageFile.size < 4000000);
       setProfilePhoto(imageFile);
     }
   }
@@ -180,60 +190,75 @@ export function AddContactDialog() {
                   />
                 </motion.div>
               </div>
-              <input
-                onChange={handleImageFile}
-                ref={filePickerInput}
-                type="file"
-                className="hidden"
-                accept="image/*"
-              />
-              {profilePictureURL ? (
-                <motion.div
-                  className="flex justify-end gap-2"
-                  initial={{ opacity: 0 }}
-                  animate={{ opacity: 1 }}
-                  exit={{ opacity: 0 }}
-                  key="change-picture-button"
-                >
-                  <Button
-                    autoFocus
-                    iconSrc="/icons/Change.svg"
-                    primary
-                    aria-label="Add picture"
-                    onClick={() => {
-                      filePickerInput.current?.click();
-                    }}
+              <div>
+                <input
+                  onChange={handleImageFile}
+                  ref={filePickerInput}
+                  type="file"
+                  className="hidden"
+                  accept="image/*"
+                />
+                {profilePictureURL ? (
+                  <motion.div
+                    className="relative flex justify-end gap-2"
+                    initial={{ opacity: 0 }}
+                    animate={{ opacity: 1 }}
+                    exit={{ opacity: 0 }}
+                    key="change-picture-button"
                   >
-                    Change picture
-                  </Button>
-                  <Button
-                    primary
-                    iconSrc="/icons/Delete.svg"
-                    onClick={() => {
-                      setProfilePhoto(undefined);
-                    }}
-                  />
-                </motion.div>
-              ) : (
-                <motion.div
-                  key="add-picture-button"
-                  initial={{ opacity: 0 }}
-                  animate={{ opacity: 1 }}
-                  exit={{ opacity: 0 }}
-                >
-                  <Button
-                    autoFocus
-                    iconSrc="/icons/Add.svg"
-                    primary
-                    aria-label="Add picture"
-                    onClick={() => {
-                      filePickerInput.current?.click();
-                    }}
+                    <Button
+                      autoFocus
+                      iconSrc="/icons/Change.svg"
+                      primary
+                      aria-label="Add picture"
+                      onClick={() => {
+                        filePickerInput.current?.click();
+                      }}
+                    >
+                      Change picture
+                    </Button>
+                    <Button
+                      primary
+                      iconSrc="/icons/Delete.svg"
+                      onClick={() => {
+                        setProfilePhoto(undefined);
+                      }}
+                    />
+                    {imageTooBigMessage && (
+                      <motion.div
+                        key="image-too-big-message"
+                        className="absolute left-0 -bottom-6"
+                        initial={{ opacity: 0 }}
+                        animate={{ opacity: 1 }}
+                        exit={{ opacity: 0 }}
+                      >
+                        <Message className="text-red-400">
+                          Select an image under 4 MB!
+                        </Message>
+                      </motion.div>
+                    )}
+                  </motion.div>
+                ) : (
+                  <motion.div
+                    key="add-picture-button"
+                    initial={{ opacity: 0 }}
+                    animate={{ opacity: 1 }}
+                    exit={{ opacity: 0 }}
                   >
-                    Add picture
-                  </Button>
-                </motion.div>
-              )}
+                    <Button
+                      autoFocus
+                      iconSrc="/icons/Add.svg"
+                      primary
+                      aria-label="Add picture"
+                      onClick={() => {
+                        filePickerInput.current?.click();
+                      }}
+                    >
+                      Add picture
+                    </Button>
+                  </motion.div>
+                )}
+              </div>
             </div>
             <fieldset>
               <InputLabel htmlFor="contact-name">

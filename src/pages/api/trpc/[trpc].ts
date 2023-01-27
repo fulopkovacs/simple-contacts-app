@@ -19,11 +19,15 @@ export default createNextApiHandler({
 });
 
 export const config = {
-  // Some images are large, that's why these limits had to be increased
+  /*
+    Some images are large, that's why these limits had to be increased
+    We shouldn't use the api for uploading images anyways (use an object storage/CDN instead):
+    https://nextjs.org/docs/messages/api-routes-response-size-limit
+  */
   api: {
     bodyParser: {
-      sizeLimit: "4mb",
+      sizeLimit: "6mb",
     },
-    responseLimit: "4mb",
+    responseLimit: "6mb",
   },
 };
