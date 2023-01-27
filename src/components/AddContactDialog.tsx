@@ -119,7 +119,12 @@ export function AddContactDialog() {
   function handleImageFile(event: ChangeEvent<HTMLInputElement>) {
     if (event.target.files) {
       const [imageFile] = event.target.files;
-      setImageTooBigMessage(!imageFile || imageFile.size < 4000000);
+      /*
+       Technicallly I the size limit for the size of the **full** payload is 6mb.
+       This is just a demo, but in production I would have to check the size of the
+       whole request payload, not just the size of the image.
+      */
+      setImageTooBigMessage(!imageFile || imageFile.size > 4000000);
       setProfilePhoto(imageFile);
     }
   }
