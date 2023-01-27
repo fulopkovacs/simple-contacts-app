@@ -1,7 +1,7 @@
 import { Button } from "./Button";
 import { Headline2, Message } from "./Typography";
 import Image from "next/image";
-import { useContext, useMemo, useRef, useState } from "react";
+import { useContext, useEffect, useMemo, useRef, useState } from "react";
 import type {
   ReactNode,
   ChangeEvent,
@@ -59,33 +59,49 @@ function blobToBase64(blob: File) {
 
 export function EditContactDialog() {
   const utils = api.useContext();
-  const { isOpen: dialogOpen, setIsOpen: setIsDialogOpen } = useContext(
-    EditContactDialogContext
-  );
+  const {
+    isContactDialogOpen,
+    setIsContactDialogOpen,
+    editedContact,
+    setEditedContact,
+  } = useContext(EditContactDialogContext);
 
-  const [profilePhoto, setProfilePhoto] = useState<File | undefined>();
+  const title = editedContact ? "Edit contact" : "Add contact";
+
+  const [profilePhoto, setProfilePhoto] = useState<File | undefined | string>();
 
   const profilePictureURL = useMemo(
-    () => (profilePhoto ? URL.createObjectURL(profilePhoto) : undefined),
+    () =>
+      profilePhoto instanceof File
+        ? URL.createObjectURL(profilePhoto)
+        : profilePhoto,
     [profilePhoto]
   );
 
   const [phoneNumber, setPhoneNumber] = useState<E164Number>();
-  const [name, setName] = useState("");
+  const [name, setName] = useState(editedContact?.name || "");
   const [isNameMissing, setIsNameMissing] = useState(false);
   const [email, setEmail] = useState("");
   const [imageTooBigMessage, setImageTooBigMessage] = useState(false);
 
+  useEffect(() => {
+    setProfilePhoto(editedContact?.profilePhoto || undefined);
+    setName(editedContact?.name || "");
+    setPhoneNumber(editedContact?.phone || "");
+    setEmail(editedContact?.email || "");
+  }, [editedContact, setEditedContact]);
+
   function closeDialog() {
     setProfilePhoto(undefined);
-    setIsDialogOpen(false);
+    setIsContactDialogOpen(false);
     setName("");
     setPhoneNumber("");
     setEmail("");
     setIsNameMissing(false);
+    setEditedContact(undefined);
   }
 
-  const createContactMutation = api.contacts.createContact.useMutation({
+  const contactMutation = api.contacts.upsertContact.useMutation({
     onSuccess: async () => {
       await utils.contacts.invalidate();
       closeDialog();
@@ -103,13 +119,17 @@ export function EditContactDialog() {
       // Image size shouldn't be over 4MB
       !imageTooBigMessage
     ) {
-      createContactMutation.mutate({
+      contactMutation.mutate({
         name,
         email,
         userId,
+        contactId: editedContact?.id,
         phone: phoneNumber,
         // TODO: make sure that the size of profilePhoto does not exceed 4MB
-        profilePhoto: profilePhoto && (await blobToBase64(profilePhoto)),
+        profilePhoto:
+          profilePhoto instanceof File
+            ? await blobToBase64(profilePhoto)
+            : profilePhoto,
       });
     } else {
       if (!name) setIsNameMissing(true);
@@ -131,7 +151,7 @@ export function EditContactDialog() {
 
   const filePickerInput = useRef<HTMLInputElement>(null);
 
-  if (!dialogOpen) return <></>;
+  if (!isContactDialogOpen) return <></>;
 
   return (
     <>
@@ -176,7 +196,7 @@ export function EditContactDialog() {
               (e) => e.stopPropagation()
             }
           >
-            <Headline2 id="add-contact-dialog-title">Add contact</Headline2>
+            <Headline2 id="add-contact-dialog-title">{title}</Headline2>
             <div className="flex items-center gap-4">
               <div className="relative h-[88px] w-[88px] overflow-hidden rounded-full">
                 <motion.div

@@ -6,22 +6,28 @@ import { ContactsList } from "../components/ContactsList";
 import { NavBar } from "../components/NavBar";
 import { PageContent } from "../components/PageContent";
 import { PageWrapper } from "../components/PageWrapper";
+import { Contact } from "@prisma/client";
 
 type EditContactDialogContextType = {
-  isOpen: boolean;
-  setIsOpen: (arg: boolean) => void;
+  isContactDialogOpen: boolean;
+  setIsContactDialogOpen: (arg: boolean) => void;
+  editedContact?: Contact;
+  setEditedContact: (contact?: Contact) => void;
 };
 
 export const EditContactDialogContext =
   createContext<EditContactDialogContextType>({
-    isOpen: false,
+    isContactDialogOpen: false,
     // eslint-disable-next-line @typescript-eslint/no-empty-function
-    setIsOpen: () => {},
+    setIsContactDialogOpen: () => {},
+    // eslint-disable-next-line @typescript-eslint/no-empty-function
+    setEditedContact: () => {},
   });
 EditContactDialogContext.displayName = "EditContactDialogContext";
 
 const Home: NextPage = () => {
-  const [isOpen, setIsOpen] = useState(false);
+  const [isContactDialogOpen, setIsContactDialogOpen] = useState(false);
+  const [editedContact, setEditedContact] = useState<Contact | undefined>();
 
   return (
     <>
@@ -31,7 +37,14 @@ const Home: NextPage = () => {
         <link rel="icon" href="/favicon.svg" />
       </Head>
       <PageWrapper>
-        <EditContactDialogContext.Provider value={{ isOpen, setIsOpen }}>
+        <EditContactDialogContext.Provider
+          value={{
+             isContactDialogOpen,
+             setIsContactDialogOpen,
+            editedContact,
+            setEditedContact,
+          }}
+        >
           <NavBar />
           <PageContent>
             <ContactsList />

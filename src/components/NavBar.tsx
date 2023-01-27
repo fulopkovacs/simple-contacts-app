@@ -6,7 +6,7 @@ import { Headline1 } from "./Typography";
 The navigation bar.
 */
 export function NavBar() {
-  const { setIsOpen: setIsDialogOpen } = useContext(EditContactDialogContext);
+  const { setIsContactDialogOpen: setIsDialogOpen } = useContext(EditContactDialogContext);
 
   return (
     <div className="sticky top-0 z-20 grid w-full flex-grow-0 grid-cols-navbar grid-rows-2 border-b border-g-60 bg-g-100">

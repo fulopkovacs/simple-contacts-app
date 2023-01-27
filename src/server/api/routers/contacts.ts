@@ -13,7 +13,7 @@ export const contactsRouter = createTRPCRouter({
     .mutation(({ ctx, input }) => {
       return ctx.prisma.contact.delete({ where: { id: input.contactId } });
     }),
-  createContact: publicProcedure
+  upsertContact: publicProcedure
     .input(
       z.object({
         userId: z.string().uuid(),
@@ -21,6 +21,7 @@ export const contactsRouter = createTRPCRouter({
         phone: z.string().optional(),
         email: z.string().optional(),
         profilePhoto: z.string().optional(),
+        contactId: z.string().uuid().optional(),
       })
     )
     .mutation(async ({ ctx, input }) => {
@@ -36,8 +37,16 @@ export const contactsRouter = createTRPCRouter({
       // https://github.com/trpc/trpc/discussions/658#discussioncomment-998746
       if (input.profilePhoto) data.profilePhoto = input.profilePhoto;
 
-      return ctx.prisma.contact.create({
-        data,
+      return ctx.prisma.contact.upsert({
+        where: {
+          id: input.contactId,
+        },
+        create: {
+          ...data,
+        },
+        update: {
+          ...data,
+        },
       });
     }),
 });

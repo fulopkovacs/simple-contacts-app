@@ -24,7 +24,8 @@ export function ContactDropdownMenu({
       await utils.contacts.invalidate();
     },
   });
-
+  const { setEditedContact,  setIsContactDialogOpen } =
+    useContext(EditContactDialogContext);
   /*
   NOTE: This code could be simplified by creating components from the repetitive parts,
   but I think it would make the reviewers' work harder (too many components to keep in mind),
@@ -48,7 +49,13 @@ export function ContactDropdownMenu({
         className="mt-3 w-[219px] overflow-hidden rounded-lg bg-g-80"
         align="start"
       >
-        <DropdownMenu.Item className="active:bg-60 flex items-center gap-3 p-3 outline-none transition-opacity hover:bg-g-70">
+        <DropdownMenu.Item
+          className="active:bg-60 flex items-center gap-3 p-3 outline-none transition-opacity hover:bg-g-70"
+          onClick={() => {
+            setEditedContact(contact);
+            setIsContactDialogOpen(true);
+          }}
+        >
           <div className="relative inline-block h-6 w-6 opacity-secondary">
             <Image src={"/icons/Settings.svg"} alt="" fill />
           </div>
@@ -116,7 +123,9 @@ export function ContactListItem({ contact }: { contact: Contact }) {
 
 export function ContactsList() {
   const contactsQuery = api.contacts.getAllContacts.useQuery({ userId });
-  const { setIsOpen: dialogOpen } = useContext(EditContactDialogContext);
+  const { setIsContactDialogOpen: dialogOpen } = useContext(
+    EditContactDialogContext
+  );
 
   return (
     <div className="flex w-full flex-col items-center justify-center">
