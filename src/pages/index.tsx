@@ -1,24 +1,24 @@
 import { type NextPage } from "next";
 import Head from "next/head";
 import { createContext, useState } from "react";
-import { AddContactDialog } from "../components/AddContactDialog";
+import { EditContactDialog } from "../components/EditContactDialog";
 import { ContactsList } from "../components/ContactsList";
 import { NavBar } from "../components/NavBar";
 import { PageContent } from "../components/PageContent";
 import { PageWrapper } from "../components/PageWrapper";
 
-type AddContactDialogContextType = {
+type EditContactDialogContextType = {
   isOpen: boolean;
   setIsOpen: (arg: boolean) => void;
 };
 
-export const AddContactDialogContext =
-  createContext<AddContactDialogContextType>({
+export const EditContactDialogContext =
+  createContext<EditContactDialogContextType>({
     isOpen: false,
     // eslint-disable-next-line @typescript-eslint/no-empty-function
     setIsOpen: () => {},
   });
-AddContactDialogContext.displayName = "AddContactDialogContext";
+EditContactDialogContext.displayName = "EditContactDialogContext";
 
 const Home: NextPage = () => {
   const [isOpen, setIsOpen] = useState(false);
@@ -31,13 +31,13 @@ const Home: NextPage = () => {
         <link rel="icon" href="/favicon.svg" />
       </Head>
       <PageWrapper>
-        <AddContactDialogContext.Provider value={{ isOpen, setIsOpen }}>
+        <EditContactDialogContext.Provider value={{ isOpen, setIsOpen }}>
           <NavBar />
           <PageContent>
             <ContactsList />
           </PageContent>
-          <AddContactDialog />
-        </AddContactDialogContext.Provider>
+          <EditContactDialog />
+        </EditContactDialogContext.Provider>
       </PageWrapper>
     </>
   );

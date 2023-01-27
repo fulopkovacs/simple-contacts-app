@@ -4,7 +4,7 @@ import { Body, Headline3, Message } from "./Typography";
 import Image from "next/image";
 import { Button } from "./Button";
 import { useContext, useState } from "react";
-import { AddContactDialogContext } from "../pages";
+import { EditContactDialogContext } from "../pages";
 import { AnimatePresence, motion } from "framer-motion";
 import { userId } from "./constants";
 import * as DropdownMenu from "@radix-ui/react-dropdown-menu";
@@ -116,7 +116,7 @@ export function ContactListItem({ contact }: { contact: Contact }) {
 
 export function ContactsList() {
   const contactsQuery = api.contacts.getAllContacts.useQuery({ userId });
-  const { setIsOpen: dialogOpen } = useContext(AddContactDialogContext);
+  const { setIsOpen: dialogOpen } = useContext(EditContactDialogContext);
 
   return (
     <div className="flex w-full flex-col items-center justify-center">

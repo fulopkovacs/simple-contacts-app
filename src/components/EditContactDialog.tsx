@@ -9,7 +9,7 @@ import type {
   InputHTMLAttributes,
   LabelHTMLAttributes,
 } from "react";
-import { AddContactDialogContext } from "../pages";
+import { EditContactDialogContext } from "../pages";
 import { AnimatePresence, motion } from "framer-motion";
 import PhoneNumberInput from "react-phone-number-input/input";
 import type { Value as E164Number } from "react-phone-number-input";
@@ -57,10 +57,10 @@ function blobToBase64(blob: File) {
   });
 }
 
-export function AddContactDialog() {
+export function EditContactDialog() {
   const utils = api.useContext();
   const { isOpen: dialogOpen, setIsOpen: setIsDialogOpen } = useContext(
-    AddContactDialogContext
+    EditContactDialogContext
   );
 
   const [profilePhoto, setProfilePhoto] = useState<File | undefined>();

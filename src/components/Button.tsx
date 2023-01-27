@@ -41,7 +41,7 @@ export function Button({
   );
 }
 
-export function AddContactButton({
+export function EditContactButton({
   children,
   className,
   ...props
