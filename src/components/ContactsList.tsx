@@ -24,8 +24,9 @@ export function ContactDropdownMenu({
       await utils.contacts.invalidate();
     },
   });
-  const { setEditedContact,  setIsContactDialogOpen } =
-    useContext(EditContactDialogContext);
+  const { setEditedContact, setIsContactDialogOpen } = useContext(
+    EditContactDialogContext
+  );
   /*
   NOTE: This code could be simplified by creating components from the repetitive parts,
   but I think it would make the reviewers' work harder (too many components to keep in mind),
