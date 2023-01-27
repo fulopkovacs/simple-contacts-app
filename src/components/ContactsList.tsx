@@ -52,7 +52,7 @@ export function ContactDropdownMenu({
         align="start"
       >
         <DropdownMenu.Item
-          className="active:bg-60 flex items-center gap-3 p-3 outline-none transition-opacity hover:bg-g-70"
+          className="active:bg-60 flex items-center gap-3 p-3 outline-none transition-opacity hover:cursor-pointer hover:bg-g-70"
           onClick={() => {
             setEditedContact(contact);
             setIsContactDialogOpen(true);
@@ -61,16 +61,16 @@ export function ContactDropdownMenu({
           <div className="relative inline-block h-6 w-6 opacity-secondary">
             <Image src={"/icons/Settings.svg"} alt="" fill />
           </div>
-          <Body>Edit</Body>
+          <Body className="touch-none select-none">Edit</Body>
         </DropdownMenu.Item>
-        <DropdownMenu.Item className="active:bg-60 flex items-center gap-3 p-3 outline-none transition-opacity hover:bg-g-70">
+        <DropdownMenu.Item className="active:bg-60 flex items-center gap-3 p-3 outline-none transition-opacity hover:cursor-pointer hover:bg-g-70">
           <div className="relative inline-block h-6 w-6 opacity-secondary">
             <Image src={"/icons/Favourite.svg"} alt="" fill />
           </div>
-          <Body>Favourite</Body>
+          <Body className="touch-none select-none">Favourite</Body>
         </DropdownMenu.Item>
         <DropdownMenu.Item
-          className="active:bg-60 flex items-center gap-3 p-3 outline-none hover:bg-g-70"
+          className="active:bg-60 flex items-center gap-3 p-3 outline-none hover:cursor-pointer hover:bg-g-70"
           onClick={() => {
             deleteContactMutation.mutate({ contactId: contact.id });
           }}
@@ -78,7 +78,7 @@ export function ContactDropdownMenu({
           <div className="relative inline-block h-6 w-6 opacity-secondary transition-opacity">
             <Image src={"/icons/Delete.svg"} alt="" fill />
           </div>
-          <Body>Remove</Body>
+          <Body className="touch-none select-none">Remove</Body>
         </DropdownMenu.Item>
       </DropdownMenu.Content>
     </DropdownMenu.Root>
