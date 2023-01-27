@@ -8,6 +8,7 @@ import { EditContactDialogContext } from "../pages";
 import { AnimatePresence, motion } from "framer-motion";
 import { userId } from "./constants";
 import * as DropdownMenu from "@radix-ui/react-dropdown-menu";
+import { formatPhoneNumberIntl } from "react-phone-number-input";
 
 export function ContactDropdownMenu({
   contact,
@@ -103,7 +104,9 @@ export function ContactListItem({ contact }: { contact: Contact }) {
       </div>
       <div>
         <Headline3>{contact.name}</Headline3>
-        <Message className="opacity-secondary">{contact.phone || "-"}</Message>
+        <Message className="opacity-secondary">
+          {contact.phone ? formatPhoneNumberIntl(contact.phone) : "-"}
+        </Message>
       </div>
       <div
         className={`flex flex-grow items-center justify-end gap-2 transition-opacity group-hover/contact:opacity-100 ${
