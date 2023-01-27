@@ -9,7 +9,7 @@ export function NavBar() {
   const { setIsOpen: setIsDialogOpen } = useContext(AddContactDialogContext);
 
   return (
-    <div className="grid w-full flex-grow-0 grid-cols-navbar grid-rows-2 border-b border-g-60">
+    <div className="sticky top-0 z-20 grid w-full flex-grow-0 grid-cols-navbar grid-rows-2 border-b border-g-60 bg-g-100">
       <div className=""></div>
       <div className="border-x border-g-60"></div>
       <div className=""></div>
