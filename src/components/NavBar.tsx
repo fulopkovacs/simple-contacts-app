@@ -44,7 +44,7 @@ export function NavBar() {
           <Button iconSrc="/icons/Back-arrow.svg"></Button>
         </NavBarButtonWrapper>
         <div className="flex items-center gap-6 border-g-60 lg:w-[720px] lg:border-x lg:pt-24">
-          <div className="grid w-full grid-cols-2 items-center gap-6 border-y border-g-60 p-6 lg:flex lg:h-24 lg:w-[720px] lg:flex-row">
+          <div className="grid w-full grid-cols-2 items-center gap-6 border-y border-g-60 p-6 lg:flex lg:h-24 lg:flex-row">
             <Headline1 className="w-full">Contacts</Headline1>
             <div className="flex justify-end gap-2">
               <Button iconSrc="/icons/Settings.svg" />
