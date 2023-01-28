@@ -29,7 +29,10 @@ export const contactsRouter = createTRPCRouter({
         name: input.name,
         userId: input.userId,
       };
-      // TODO: validate phone numbers?
+      // NOTE: In a real-life application, I would have to check if
+      // the phone number is valid. This could be easily done with a utility
+      // function from `react-phone-number-input` (we already use it on the client side):
+      // https://gitlab.com/catamphetamine/react-phone-number-input#isvalidphonenumbervalue-string-boolean
       if (input.phone) data.phone = input.phone;
       if (input.email) data.email = input.email;
       // TODO: Explain in a comment why trpc is not good for uploading images (json only),
@@ -39,7 +42,7 @@ export const contactsRouter = createTRPCRouter({
 
       return ctx.prisma.contact.upsert({
         where: {
-          id: input.contactId,
+          id: input.contactId || "",
         },
         create: {
           ...data,
