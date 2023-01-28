@@ -9,6 +9,7 @@
     "db-seed": "NODE_ENV=development prisma db seed",
     "db-generate": "prisma generate",
     "db-migrate-dev": "prisma migrate dev",
+    "db-reset-dev": "NODE_ENV=development prisma migrate reset",
     "studio": "prisma studio",
     "lint": "next lint",
     "start": "next start"
