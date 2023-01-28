@@ -94,7 +94,7 @@ export function ContactListItem({ contact }: { contact: Contact }) {
       key={contact.id}
       className="group/contact flex w-full items-center gap-4 py-3 first:pt-0"
     >
-      <div className="relative h-10 w-10 overflow-hidden rounded-full">
+      <div className="relative h-10 w-10 min-w-[40px] overflow-hidden rounded-full">
         <Image
           src={contact.profilePhoto || "/profile-pics/Default.png"}
           fill
@@ -154,11 +154,11 @@ export function ContactsList() {
             layoutId="loading"
           >
             {/**
-      NOTE: Normally I'd use a loading spinner here, but now I won't,
-      because you would barely even see it if you ran this project locally.
-      And this won't get depoloyed, so...
-      I'm gonna be lazy here ^^.
-      */}
+            NOTE: Normally I'd use a loading spinner here, but now I won't,
+            because you would barely even see it if you ran this project locally.
+            And this won't get depoloyed, so...
+            I'm gonna be lazy here ^^.
+            */}
             <Body className="animate-pulse">Loading...</Body>
           </motion.div>
         )}
