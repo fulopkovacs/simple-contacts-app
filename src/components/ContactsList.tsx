@@ -44,7 +44,7 @@ export function ContactDropdownMenu({
         }`}
       >
         <span className="relative inline-block h-6 w-6">
-          <Image src={"/icons/More.svg"} alt="" fill />
+          <Image src={"/icons/More.svg"} alt="" fill priority />
         </span>
       </DropdownMenu.Trigger>
       <DropdownMenu.Content
@@ -59,13 +59,13 @@ export function ContactDropdownMenu({
           }}
         >
           <div className="relative inline-block h-6 w-6 opacity-secondary">
-            <Image src={"/icons/Settings.svg"} alt="" fill />
+            <Image src={"/icons/Settings.svg"} alt="" fill priority />
           </div>
           <Body className="touch-none select-none">Edit</Body>
         </DropdownMenu.Item>
         <DropdownMenu.Item className="active:bg-60 flex items-center gap-3 p-3 outline-none transition-opacity hover:cursor-pointer hover:bg-g-70">
           <div className="relative inline-block h-6 w-6 opacity-secondary">
-            <Image src={"/icons/Favourite.svg"} alt="" fill />
+            <Image src={"/icons/Favourite.svg"} alt="" fill priority />
           </div>
           <Body className="touch-none select-none">Favourite</Body>
         </DropdownMenu.Item>

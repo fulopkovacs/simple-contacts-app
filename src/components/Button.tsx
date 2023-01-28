@@ -33,7 +33,7 @@ export function Button({
     >
       {iconSrc && (
         <span className="relative inline-block h-6 w-6">
-          <Image src={iconSrc} alt="" fill />
+          <Image src={iconSrc} alt="" fill priority />
         </span>
       )}
       {children}
@@ -56,7 +56,7 @@ export function EditContactButton({
       <span className="absolute top-0 left-0 z-10 h-full w-full rounded-full bg-white opacity-0 transition-opacity hover:opacity-[4%]"></span>
       <div className="relative m-[1px] flex h-10 w-max items-center justify-center gap-2 rounded-full bg-gradient-to-b from-add-contact-base-1 to-add-contact-base-2  pl-3 pr-4">
         <span className="relative inline-block h-6 w-6">
-          <Image src="/icons/Add.svg" alt="icon" fill />
+          <Image src="/icons/Add.svg" alt="icon" fill priority />
         </span>
         {children}
       </div>
