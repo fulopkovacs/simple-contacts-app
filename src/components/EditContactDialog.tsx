@@ -47,7 +47,7 @@ function Input({
 
 // This function was borrowed from Arun Killu:
 // https://stackoverflow.com/a/18650249
-function blobToBase64(blob: File) {
+function blobToBase64(blob: Blob) {
   return new Promise<string>((resolve) => {
     // TODO: It's probably not a good idea to create a new FileReader() everytime this function is executed
     const reader = new FileReader();
@@ -68,11 +68,11 @@ export function EditContactDialog() {
 
   const title = editedContact ? "Edit contact" : "Add contact";
 
-  const [profilePhoto, setProfilePhoto] = useState<File | undefined | string>();
+  const [profilePhoto, setProfilePhoto] = useState<Blob | undefined | string>();
 
   const profilePictureURL = useMemo(
     () =>
-      profilePhoto instanceof File
+      profilePhoto instanceof Blob
         ? URL.createObjectURL(profilePhoto)
         : profilePhoto,
     [profilePhoto]
@@ -127,7 +127,7 @@ export function EditContactDialog() {
         phone: phoneNumber,
         // TODO: make sure that the size of profilePhoto does not exceed 4MB
         profilePhoto:
-          profilePhoto instanceof File
+          profilePhoto instanceof Blob
             ? await blobToBase64(profilePhoto)
             : profilePhoto,
       });
