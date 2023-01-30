@@ -104,9 +104,14 @@ export function ContactDialog() {
     setEditedContact(undefined);
   }
 
+  /*
+   NOTE: I intentionally avoid using optimistic updates here. Large
+   images can take a long time to upload, but users should always know
+   when data is being uploaded, otherwise they might accidentally
+   cancel the process (e.g. by closing the browser).
+  */
   const contactMutation = api.contacts.upsertContact.useMutation({
     onMutate: () => {
-      console.log("loading...");
       setMutationInProgress(true);
     },
     onSuccess: async () => {
@@ -135,7 +140,6 @@ export function ContactDialog() {
         userId,
         contactId: editedContact?.id,
         phone: phoneNumber,
-        // TODO: make sure that the size of profilePhoto does not exceed 4MB
         profilePhoto:
           profilePhoto instanceof Blob
             ? await blobToBase64(profilePhoto)
@@ -150,7 +154,7 @@ export function ContactDialog() {
     if (event.target.files) {
       const [imageFile] = event.target.files;
       /*
-       Technicallly I the size limit for the size of the **full** payload is 6mb.
+       NOTE: Technicallly I the size limit for the size of the **full** payload is 6mb.
        This is just a demo, but in production I would have to check the size of the
        whole request payload, not just the size of the image.
       */
