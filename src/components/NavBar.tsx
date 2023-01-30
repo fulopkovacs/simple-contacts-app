@@ -1,5 +1,5 @@
 import { useContext } from "react";
-import { EditContactDialogContext } from "../pages";
+import { ContactDialogContext } from "../pages";
 import { EditContactButton, Button } from "./Button";
 import { Headline1 } from "./Typography";
 
@@ -26,7 +26,7 @@ The navigation bar.
 */
 export function NavBar() {
   const { setIsContactDialogOpen: setIsDialogOpen } = useContext(
-    EditContactDialogContext
+    ContactDialogContext
   );
 
   return (

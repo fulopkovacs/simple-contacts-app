@@ -4,7 +4,7 @@ import { Body, Headline3, Message } from "./Typography";
 import Image from "next/image";
 import { Button } from "./Button";
 import { useContext, useState } from "react";
-import { EditContactDialogContext } from "../pages";
+import { ContactDialogContext } from "../pages";
 import { AnimatePresence, motion } from "framer-motion";
 import { userId } from "./constants";
 import * as DropdownMenu from "@radix-ui/react-dropdown-menu";
@@ -25,9 +25,8 @@ export function ContactDropdownMenu({
       await utils.contacts.invalidate();
     },
   });
-  const { setEditedContact, setIsContactDialogOpen } = useContext(
-    EditContactDialogContext
-  );
+  const { setEditedContact, setIsContactDialogOpen } =
+    useContext(ContactDialogContext);
   /*
   NOTE: This code could be simplified by creating components from the repetitive parts,
   but I think it would make the reviewers' work harder (too many components to keep in mind),
@@ -127,9 +126,8 @@ export function ContactListItem({ contact }: { contact: Contact }) {
 
 export function ContactsList() {
   const contactsQuery = api.contacts.getAllContacts.useQuery({ userId });
-  const { setIsContactDialogOpen: dialogOpen } = useContext(
-    EditContactDialogContext
-  );
+  const { setIsContactDialogOpen: dialogOpen } =
+    useContext(ContactDialogContext);
 
   return (
     <div className="flex w-full flex-col items-center justify-center">

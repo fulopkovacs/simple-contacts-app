@@ -9,12 +9,13 @@ import type {
   InputHTMLAttributes,
   LabelHTMLAttributes,
 } from "react";
-import { EditContactDialogContext } from "../pages";
+import { ContactDialogContext } from "../pages";
 import { AnimatePresence, motion } from "framer-motion";
 import PhoneNumberInput from "react-phone-number-input/input";
 import type { Value as E164Number } from "react-phone-number-input";
 import { api } from "../utils/api";
 import { userId } from "./constants";
+import { LoadingSpinner } from "./LoadingSpinner";
 
 function InputLabel({
   children,
@@ -57,14 +58,14 @@ function blobToBase64(blob: Blob) {
   });
 }
 
-export function EditContactDialog() {
+export function ContactDialog() {
   const utils = api.useContext();
   const {
     isContactDialogOpen,
     setIsContactDialogOpen,
     editedContact,
     setEditedContact,
-  } = useContext(EditContactDialogContext);
+  } = useContext(ContactDialogContext);
 
   const title = editedContact ? "Edit contact" : "Add contact";
 
@@ -83,6 +84,7 @@ export function EditContactDialog() {
   const [isNameMissing, setIsNameMissing] = useState(false);
   const [email, setEmail] = useState("");
   const [imageTooBigMessage, setImageTooBigMessage] = useState(false);
+  const [isMutationInProgress, setMutationInProgress] = useState(false);
 
   useEffect(() => {
     setProfilePhoto(editedContact?.profilePhoto || undefined);
@@ -92,6 +94,7 @@ export function EditContactDialog() {
   }, [editedContact, setEditedContact]);
 
   function closeDialog() {
+    setMutationInProgress(false);
     setProfilePhoto(undefined);
     setIsContactDialogOpen(false);
     setName("");
@@ -102,11 +105,16 @@ export function EditContactDialog() {
   }
 
   const contactMutation = api.contacts.upsertContact.useMutation({
+    onMutate: () => {
+      console.log("loading...");
+      setMutationInProgress(true);
+    },
     onSuccess: async () => {
       await utils.contacts.invalidate();
       closeDialog();
     },
     onError: (error) => {
+      setMutationInProgress(false);
       // TODO: do something with the errors
       console.log(error);
     },
@@ -119,6 +127,8 @@ export function EditContactDialog() {
       // Image size shouldn't be over 4MB
       !imageTooBigMessage
     ) {
+      if (isMutationInProgress) return;
+
       contactMutation.mutate({
         name,
         email,
@@ -343,11 +353,13 @@ export function EditContactDialog() {
                 Cancel
               </Button>
               <Button
+                className="relative"
                 primary
                 onClick={() => {
                   void saveAndCloseDialog();
                 }}
               >
+                {isMutationInProgress && <LoadingSpinner />}
                 Done
               </Button>
             </div>

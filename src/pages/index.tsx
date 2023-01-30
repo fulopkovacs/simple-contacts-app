@@ -1,29 +1,30 @@
 import { type NextPage } from "next";
 import Head from "next/head";
 import { createContext, useState } from "react";
-import { EditContactDialog } from "../components/EditContactDialog";
+import { ContactDialog } from "../components/ContactDialog";
 import { ContactsList } from "../components/ContactsList";
 import { NavBar } from "../components/NavBar";
 import { PageContent } from "../components/PageContent";
 import { PageWrapper } from "../components/PageWrapper";
 import { Contact } from "@prisma/client";
 
-type EditContactDialogContextType = {
+type ContactDialogContextType = {
   isContactDialogOpen: boolean;
   setIsContactDialogOpen: (arg: boolean) => void;
   editedContact?: Contact;
   setEditedContact: (contact?: Contact) => void;
 };
 
-export const EditContactDialogContext =
-  createContext<EditContactDialogContextType>({
+export const ContactDialogContext = createContext<ContactDialogContextType>(
+  {
     isContactDialogOpen: false,
     // eslint-disable-next-line @typescript-eslint/no-empty-function
     setIsContactDialogOpen: () => {},
     // eslint-disable-next-line @typescript-eslint/no-empty-function
     setEditedContact: () => {},
-  });
-EditContactDialogContext.displayName = "EditContactDialogContext";
+  }
+);
+ContactDialogContext.displayName = "EditContactDialogContext";
 
 const Home: NextPage = () => {
   const [isContactDialogOpen, setIsContactDialogOpen] = useState(false);
@@ -37,10 +38,10 @@ const Home: NextPage = () => {
         <link rel="icon" href="/favicon.svg" />
       </Head>
       <PageWrapper>
-        <EditContactDialogContext.Provider
+        <ContactDialogContext.Provider
           value={{
-             isContactDialogOpen,
-             setIsContactDialogOpen,
+            isContactDialogOpen,
+            setIsContactDialogOpen,
             editedContact,
             setEditedContact,
           }}
@@ -49,8 +50,8 @@ const Home: NextPage = () => {
           <PageContent>
             <ContactsList />
           </PageContent>
-          <EditContactDialog />
-        </EditContactDialogContext.Provider>
+          <ContactDialog />
+        </ContactDialogContext.Provider>
       </PageWrapper>
     </>
   );
