@@ -21,7 +21,43 @@ export function ContactDropdownMenu({
 }) {
   const utils = api.useContext();
   const deleteContactMutation = api.contacts.deleteContact.useMutation({
-    onSuccess: async () => {
+    onMutate: async (removedContact) => {
+      /*
+      Perform an optimistic update as seen in the docs:
+      https://tanstack.com/query/v4/docs/react/guides/optimistic-updates
+      */
+
+      // Make sure that outgoing refetches don't overwrite the optimistic update
+      /*
+      NOTE: The `cancel` helper corresponds to `queryClient.cancelQuery` in the world of trpc
+      https://trpc.io/docs/useContext#helpers
+      */
+      await utils.contacts.getAllContacts.cancel();
+
+      // Snapshot the previous value
+      const previousContacts = utils.contacts.getAllContacts.getData();
+
+      // Optimistically update to the new value
+      /*
+      NOTE: The `cancel` helper corresponds to `queryClient.setData` in the world of trpc
+      https://trpc.io/docs/useContext#helpers
+      */
+      utils.contacts.getAllContacts.setData(
+        { userId: contact.userId },
+        (oldContacts) =>
+          oldContacts?.filter((c) => c.id !== removedContact.contactId)
+      );
+
+      return { previousContacts };
+    },
+    onError: (err, removedContact, context) => {
+      utils.contacts.getAllContacts.setData(
+        { userId: removedContact.contactId },
+        () => context?.previousContacts
+      );
+      console.error(err);
+    },
+    onSettled: async () => {
       await utils.contacts.invalidate();
     },
   });
