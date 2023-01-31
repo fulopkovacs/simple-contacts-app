@@ -23,7 +23,7 @@ export function ContactDropdownMenu({
   const deleteContactMutation = api.contacts.deleteContact.useMutation({
     onMutate: async (removedContact) => {
       /*
-      Perform an optimistic update as seen in the docs:
+      NOTE: Perform an optimistic update as seen in the docs:
       https://tanstack.com/query/v4/docs/react/guides/optimistic-updates
       */
 
@@ -93,13 +93,13 @@ export function ContactDropdownMenu({
             setIsContactDialogOpen(true);
           }}
         >
-          <div className="relative inline-block h-6 w-6 opacity-56">
+          <div className="relative inline-block h-5 w-5 opacity-56">
             <Image src={"/icons/Settings.svg"} alt="" fill priority />
           </div>
           <Body className="touch-none select-none">Edit</Body>
         </DropdownMenu.Item>
         <DropdownMenu.Item className="active:bg-60 flex items-center gap-3 p-3 outline-none transition-opacity hover:cursor-pointer hover:bg-g-70">
-          <div className="relative inline-block h-6 w-6 opacity-56">
+          <div className="relative inline-block h-5 w-5 opacity-56">
             <Image src={"/icons/Favourite.svg"} alt="" fill priority />
           </div>
           <Body className="touch-none select-none">Favourite</Body>
@@ -110,7 +110,7 @@ export function ContactDropdownMenu({
             deleteContactMutation.mutate({ contactId: contact.id });
           }}
         >
-          <div className="relative inline-block h-6 w-6 opacity-56 transition-opacity">
+          <div className="relative inline-block h-5 w-5 opacity-56 transition-opacity">
             <Image src={"/icons/Delete.svg"} alt="" fill />
           </div>
           <Body className="touch-none select-none">Remove</Body>
