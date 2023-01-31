@@ -246,6 +246,7 @@ export function ContactDialog() {
                     key="change-picture-button"
                   >
                     <Button
+                      className="outline-none"
                       autoFocus
                       iconSrc="/icons/Change.svg"
                       primary
@@ -257,6 +258,7 @@ export function ContactDialog() {
                       Change picture
                     </Button>
                     <Button
+                      className="outline-none"
                       primary
                       iconSrc="/icons/Delete.svg"
                       onClick={() => {
@@ -287,6 +289,7 @@ export function ContactDialog() {
                     <Button
                       autoFocus
                       iconSrc="/icons/Add.svg"
+                      className="outline-none"
                       primary
                       aria-label="Add picture"
                       onClick={() => {

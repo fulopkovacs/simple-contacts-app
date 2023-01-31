@@ -87,7 +87,7 @@ export function ContactDropdownMenu({
         align="start"
       >
         <DropdownMenu.Item
-          className="active:bg-60 flex items-center gap-3 p-3 outline-none transition-opacity hover:cursor-pointer hover:bg-g-70"
+          className="flex items-center gap-3 p-3 outline-none transition-opacity hover:cursor-pointer hover:bg-g-70 active:bg-g-60"
           onClick={() => {
             setEditedContact(contact);
             setIsContactDialogOpen(true);
@@ -98,14 +98,14 @@ export function ContactDropdownMenu({
           </div>
           <Body className="touch-none select-none">Edit</Body>
         </DropdownMenu.Item>
-        <DropdownMenu.Item className="active:bg-60 flex items-center gap-3 p-3 outline-none transition-opacity hover:cursor-pointer hover:bg-g-70">
+        <DropdownMenu.Item className="flex items-center gap-3 p-3 outline-none transition-opacity hover:cursor-pointer hover:bg-g-70 active:bg-g-60">
           <div className="relative inline-block h-5 w-5 opacity-56">
             <Image src={"/icons/Favourite.svg"} alt="" fill priority />
           </div>
           <Body className="touch-none select-none">Favourite</Body>
         </DropdownMenu.Item>
         <DropdownMenu.Item
-          className="active:bg-60 flex items-center gap-3 p-3 outline-none hover:cursor-pointer hover:bg-g-70"
+          className="flex items-center gap-3 p-3 outline-none hover:cursor-pointer hover:bg-g-70 active:bg-g-60"
           onClick={() => {
             deleteContactMutation.mutate({ contactId: contact.id });
           }}
