@@ -61,8 +61,11 @@ export function Body({
   children,
   className = "",
 }: TypographyComponentProps<HTMLParagraphElement>) {
-  // Made a custom Tailwind class for this style,
-  // because it's used in the `Button` component as well
+  /*
+  NOTE: Made a custom Tailwind class for this style,
+  to reuse it in the `Button` component. Check out the
+  `src/styles/globals.css` file for the `type-body` class.
+  */
   return (
     <span className={`type-body inline-block ${className}`}>{children}</span>
   );
