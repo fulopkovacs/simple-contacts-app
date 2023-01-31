@@ -98,7 +98,7 @@ Some parts of the stack were not mentioned in the job ad. I'd like to explain wh
 
 - if bundle size is really important
 
-## [`react-phone-number-input`](https://catamphetamine.gitlab.io/react-phone-number-input/)
+### [`react-phone-number-input`](https://catamphetamine.gitlab.io/react-phone-number-input/)
 
 **:heavy_check_mark: Why?**
 
