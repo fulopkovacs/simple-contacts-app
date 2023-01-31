@@ -111,7 +111,7 @@ export function ContactDropdownMenu({
           }}
         >
           <div className="relative inline-block h-5 w-5 opacity-56 transition-opacity">
-            <Image src={"/icons/Delete.svg"} alt="" fill />
+            <Image src={"/icons/Delete.svg"} alt="" fill priority />
           </div>
           <Body className="touch-none select-none">Remove</Body>
         </DropdownMenu.Item>
@@ -176,7 +176,7 @@ export function ContactsList() {
             key="error"
             layoutId="error"
           >
-            <Body>Something went wrong.</Body>
+            <Body className="text-red-400">Something went wrong.</Body>
           </motion.div>
         )}
         {contactsQuery.isLoading && (
