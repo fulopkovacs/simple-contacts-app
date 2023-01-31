@@ -9,6 +9,7 @@ A simple contacts app. This full-stack project uses the following tech stack (se
 - `framer-motion`
 - `Next.js`
 - `TypeScript`
+- `react-phone-number-input`
 - `@radix-ui/react-dropdown-menu`
 
 **:first_quarter_moon_with_face: Back End**
@@ -83,12 +84,30 @@ Some parts of the stack were not mentioned in the job ad. I'd like to explain wh
 
 - not great for public API-s (it uses the Remote Procedure Call (RPC) protocol instead of REST)
 - works best with monorepos, where the front end code co-exists with the back end code
-- only JSON request/response payloads (no `multpart/form-data`, all images need to be encoded in `base64`, although you should use an object storage + CDN with pre-signed URL-s for images in most cases anyways -- I'd happily expand on this in person if you're interested in it)
-- it's stable, but still young and most people would consider it _"bleeding edge"_
+- only JSON request/response payloads (no `multpart/form-data`, all images need to be encoded in `base64`, but [you can use an object storage + CDN with pre-signed URL-s for images](https://github.com/trpc/trpc/issues/1401#issuecomment-1047215657), it's a lot better place for hosting + serving images anyways -- I'm happy to expand on this in person)
+- it's stable, but still young and most people would consider it _"bleeding edge"_ (based on the stack mentioned in the job description, I thought you would be comfortable with this)
 
-### [`@radix-ui/react-dropdown-menu`]
+### [`@radix-ui/react-dropdown-menu`](https://www.radix-ui.com/docs/primitives/components/dropdown-menu) (a headless ui component)
 
 **:heavy_check_mark: Why?**
 
-- dropdown menus are too complex - they take an unreasonable development time considering all the edge cases and accessibility concerns
-  - Check out this talk if you don't believe me: [So You Think You Can Build A Dropdown? - Pedro Duarte - (Next.js Conf 2021)](https://www.youtube.com/watch?v=pcMYcjtWwVI&t=591s)
+- dropdown menus are in fact pretty complex - they take an unreasonable development time considering all the edge cases and accessibility concerns
+  - this talk summarizes the issues pretty well: [So You Think You Can Build A Dropdown? - Pedro Duarte - (Next.js Conf 2021)](https://www.youtube.com/watch?v=pcMYcjtWwVI&t=591s)
+- this unstyled headless UI component from radix ui is flexible enough to cover most use cases
+- it has great documentation
+- outsourcing the complex logic, edge case testing, accessibility issues to a well-documented third-party library like this ultimately results in a more maintainable code base and a faster development pace
+
+**:x: When would I avoid it?**
+
+- if bundle size is really important
+
+## [`react-phone-number-input`](https://catamphetamine.gitlab.io/react-phone-number-input/)
+
+**:heavy_check_mark: Why?**
+
+- it's relatively hard to safely parse and validate phone numbers (I looked into it)
+  - I'd rather outsource the solution to a properly-documented library than to write and maintain custom code for it (this also makes collaboration on our code base easier)
+
+**:x: When would I avoid it?**
+
+- if bundle size is important (it's relatively heavy)
