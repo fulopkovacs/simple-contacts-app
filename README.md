@@ -1,6 +1,6 @@
 # Contacts App
 
-A simple contacts app. This full-stack project uses the following tech stack (see the [Tech Stack](#tech-stack) section for a more detailed list):
+A simple contacts app. This full-stack project uses the following tech stack (see the [Tech Stack](#nerd_face-tech-stack) section for a more detailed list):
 
 **:sun_with_face: Front End**
 
@@ -9,12 +9,12 @@ A simple contacts app. This full-stack project uses the following tech stack (se
 - `framer-motion`
 - `Next.js`
 - `TypeScript`
-- `react-phone-number-input`
-- `@radix-ui/react-dropdown-menu`
+- [`react-phone-number-input`](#react-phone-number-input)
+- [`@radix-ui/react-dropdown-menu`](#radix-uireact-dropdown-menu-a-headless-ui-component)
 
 **:first_quarter_moon_with_face: Back End**
 
-- `trpc`
+- [`trpc`](#trpc)
 - `react-query` (through `trpc`)
 - `prisma`
 - `SQLite`
@@ -23,14 +23,11 @@ A simple contacts app. This full-stack project uses the following tech stack (se
 
 ## :gear: Setup
 
-Install the project's dependencies:
+Install the dependencies:
 
 ```bash
 pnpm install
 ```
-
-- [ ] Setup prisma
-- [ ] Seed the db
 
 ## :bookmark_tabs: Usage
 
