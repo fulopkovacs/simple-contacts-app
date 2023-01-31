@@ -32,9 +32,9 @@ module.exports = {
         },
       },
       opacity: {
-        primary: "100%",
-        secondary: "56%",
-        disabled: "32%",
+        100: "100%",
+        56: "56%",
+        32: "32%",
       },
       gridTemplateColumns: {
         navbar: "1fr auto 1fr",

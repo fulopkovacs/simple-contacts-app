@@ -27,7 +27,7 @@ function InputLabel({
 >) {
   return (
     <label className={`mb-1 block ${className || ""}`} {...props}>
-      <Message className="opacity-secondary">{children}</Message>
+      <Message className="opacity-56">{children}</Message>
     </label>
   );
 }
@@ -38,7 +38,7 @@ function Input({
 }: DetailedHTMLProps<InputHTMLAttributes<HTMLInputElement>, HTMLInputElement>) {
   return (
     <input
-      className={`w-full rounded-lg border border-g-60 bg-g-80 px-3 py-[11px] outline-none placeholder:opacity-disabled ${
+      className={`w-full rounded-lg border border-g-60 bg-g-80 px-3 py-[11px] outline-none placeholder:opacity-32 ${
         className || ""
       }`}
       {...props}

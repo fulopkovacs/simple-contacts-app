@@ -27,7 +27,7 @@
     @apply px-3;
     @apply py-[11px];
     @apply outline-none;
-    @apply placeholder:opacity-disabled;
+    @apply placeholder:opacity-32;
   }
 }
 

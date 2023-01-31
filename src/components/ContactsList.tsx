@@ -93,13 +93,13 @@ export function ContactDropdownMenu({
             setIsContactDialogOpen(true);
           }}
         >
-          <div className="relative inline-block h-6 w-6 opacity-secondary">
+          <div className="relative inline-block h-6 w-6 opacity-56">
             <Image src={"/icons/Settings.svg"} alt="" fill priority />
           </div>
           <Body className="touch-none select-none">Edit</Body>
         </DropdownMenu.Item>
         <DropdownMenu.Item className="active:bg-60 flex items-center gap-3 p-3 outline-none transition-opacity hover:cursor-pointer hover:bg-g-70">
-          <div className="relative inline-block h-6 w-6 opacity-secondary">
+          <div className="relative inline-block h-6 w-6 opacity-56">
             <Image src={"/icons/Favourite.svg"} alt="" fill priority />
           </div>
           <Body className="touch-none select-none">Favourite</Body>
@@ -110,7 +110,7 @@ export function ContactDropdownMenu({
             deleteContactMutation.mutate({ contactId: contact.id });
           }}
         >
-          <div className="relative inline-block h-6 w-6 opacity-secondary transition-opacity">
+          <div className="relative inline-block h-6 w-6 opacity-56 transition-opacity">
             <Image src={"/icons/Delete.svg"} alt="" fill />
           </div>
           <Body className="touch-none select-none">Remove</Body>
@@ -139,7 +139,7 @@ export function ContactListItem({ contact }: { contact: Contact }) {
       </div>
       <div>
         <Headline3>{contact.name}</Headline3>
-        <Message className="opacity-secondary">
+        <Message className="opacity-56">
           {contact.phone ? formatPhoneNumberIntl(contact.phone) : "-"}
         </Message>
       </div>
