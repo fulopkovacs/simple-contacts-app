@@ -43,4 +43,22 @@
     line-height: 20px;
     font-size: 14px;
   }
+
+  .add-contact-gradient-base {
+    background: linear-gradient(
+        180deg,
+        rgba(40, 40, 40, 0.7) 0%,
+        rgba(40, 40, 40, 1) 100%
+      ),
+      #141414;
+  }
+
+  .add-contact-gradient-border {
+    background: linear-gradient(
+        180deg,
+        rgba(60, 60, 60, 1) 0%,
+        rgba(40, 40, 40, 1) 100%
+      ),
+      #141414;
+  }
 }
