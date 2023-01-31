@@ -6,7 +6,7 @@ import { ContactsList } from "../components/ContactsList";
 import { NavBar } from "../components/NavBar";
 import { PageContent } from "../components/PageContent";
 import { PageWrapper } from "../components/PageWrapper";
-import { Contact } from "@prisma/client";
+import type { Contact } from "@prisma/client";
 
 type ContactDialogContextType = {
   isContactDialogOpen: boolean;
@@ -15,15 +15,13 @@ type ContactDialogContextType = {
   setEditedContact: (contact?: Contact) => void;
 };
 
-export const ContactDialogContext = createContext<ContactDialogContextType>(
-  {
-    isContactDialogOpen: false,
-    // eslint-disable-next-line @typescript-eslint/no-empty-function
-    setIsContactDialogOpen: () => {},
-    // eslint-disable-next-line @typescript-eslint/no-empty-function
-    setEditedContact: () => {},
-  }
-);
+export const ContactDialogContext = createContext<ContactDialogContextType>({
+  isContactDialogOpen: false,
+  // eslint-disable-next-line @typescript-eslint/no-empty-function
+  setIsContactDialogOpen: () => {},
+  // eslint-disable-next-line @typescript-eslint/no-empty-function
+  setEditedContact: () => {},
+});
 ContactDialogContext.displayName = "EditContactDialogContext";
 
 const Home: NextPage = () => {

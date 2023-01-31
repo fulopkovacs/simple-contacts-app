@@ -3,7 +3,7 @@ NOTES:
 The components are following the naming convetions `Headline1` instead of `H1` to make sure that we share the same langauge with the designers (who used this terminology in the Figma file).
 */
 
-import { DetailedHTMLProps, HTMLAttributes } from "react";
+import type { DetailedHTMLProps, HTMLAttributes } from "react";
 
 type TypographyComponentProps<T extends HTMLElement> = {
   children: React.ReactNode;
