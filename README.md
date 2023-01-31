@@ -64,6 +64,12 @@ Inspect the db:
 pnpm studio
 ```
 
+Reset the contents of the db to the seed data:
+
+```bash
+pnpm db-reset-dev
+```
+
 ## :nerd_face: Tech Stack
 
 Some parts of the stack were not mentioned in the job ad. I'd like to explain why I still decided to use them.
