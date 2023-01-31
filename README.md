@@ -23,6 +23,17 @@ A simple contacts app. This full-stack project uses the following tech stack (se
 
 This project was created using [`create-t3-app`](https://create.t3.gg/) (I'm a fan of the `t3-stack` :relaxed:).
 
+## :movie_camera: Demos
+> Check out the [README on GitHub](https://github.com/fulopkovacs/simple-contacts-app/edit/main/README.md#movie_camera-demos), if you don't see any videos below this message.
+
+
+https://user-images.githubusercontent.com/43729152/215851661-783a3378-01ee-44ad-9b94-c84e72a53144.mp4
+
+
+https://user-images.githubusercontent.com/43729152/215851682-0b89cf83-763a-478d-a96c-788997828bb0.mp4
+
+
+
 ## :gear: Setup
 
 Install the dependencies:
