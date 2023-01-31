@@ -25,7 +25,7 @@ This project was created using [`create-t3-app`](https://create.t3.gg/) (I'm a f
 
 ## :movie_camera: Demos
 
-> Check out the [README on GitHub](https://github.com/fulopkovacs/simple-contacts-app/edit/main/README.md#movie_camera-demos), if you don't see any videos below this message.
+> Check out the [README on GitHub](https://github.com/fulopkovacs/simple-contacts-app#movie_camera-demos), if you don't see any videos below this message.
 
 https://user-images.githubusercontent.com/43729152/215851661-783a3378-01ee-44ad-9b94-c84e72a53144.mp4
 
