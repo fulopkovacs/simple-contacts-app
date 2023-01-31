@@ -21,6 +21,8 @@ A simple contacts app. This full-stack project uses the following tech stack (se
 - `Next.js`
 - `TypeScript`
 
+This project was created using [`create-t3-app`](https://create.t3.gg/) (I'm a fan of the `t3-stack` :relaxed:).
+
 ## :gear: Setup
 
 Install the dependencies:
