@@ -28,6 +28,10 @@
     @apply py-[11px];
     @apply outline-none;
     @apply placeholder:opacity-32;
+    @apply focus:border-g-10;
+    @apply focus:bg-g-60;
+    @apply transition-all;
+    @apply hover:border-g-30;
   }
 }
 

@@ -38,7 +38,7 @@ function Input({
 }: DetailedHTMLProps<InputHTMLAttributes<HTMLInputElement>, HTMLInputElement>) {
   return (
     <input
-      className={`w-full rounded-lg border border-g-60 bg-g-80 px-3 py-[11px] outline-none placeholder:opacity-32 ${
+      className={`w-full rounded-lg border border-g-60 bg-g-80 px-3 py-[11px] outline-none transition-all placeholder:opacity-32 hover:border-g-30 focus:border-g-10 focus:bg-g-60 ${
         className || ""
       }`}
       {...props}
@@ -328,6 +328,10 @@ export function ContactDialog() {
             </fieldset>
             <fieldset>
               <InputLabel htmlFor="contact-phone">Phone number</InputLabel>
+              {/*
+              NOTE: The `PhoneNumberInput` component is styled in the
+              `src/styles/globals.css` file (using the `#contact-phone` id)
+              */}
               <PhoneNumberInput
                 id="contact-phone"
                 placeholder="+01 234 5678"
