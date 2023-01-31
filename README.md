@@ -31,17 +31,36 @@ Install the dependencies:
 pnpm install
 ```
 
+Set up the dev db:
+
+```bash
+pnpx prisma db push
+```
+
+Seed the db:
+
+```bash
+pnpm db-seed
+```
+
 ## :bookmark_tabs: Usage
 
 Run the dev server:
 
 ```bash
+# Starts the dev server on
+# https://localhost:3000
+# if the port is not taken
 pnpm dev
 ```
 
 Inspect the db:
 
 ```bash
+# This command should automatically
+# open up the prisma studio interface in
+# the default web browser
+# (https://localhost:5555)
 pnpm studio
 ```
 
